@@ -1,14 +1,14 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  background: #272822;
+
+  color: rgba(255, 255, 255, 0.88);
+  font: 16px/1.6 思源黑體, "Source Han Sans", "Noto Sans CJK TC", 蘋方-繁, "PingFang TC", 微軟正黑體, "Microsoft JhengHei", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+a {
+  color: inherit;
 }
