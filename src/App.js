@@ -41,12 +41,21 @@ const Wrapper = styled.div`
   padding: 40px;
 
   section {
+    flex: 1;
     padding-left: 24px;
+    &:first-child {
+      padding-left: 0;
+    }
   }
 `;
 
 const Button = styled.button`
   font-size: 32px;
+`;
+
+const Note = styled.textarea`
+  width: 100%;
+  height: 100%;
 `;
 
 function App() {
@@ -56,7 +65,15 @@ function App() {
 
   return (
     <Wrapper>
-      <FacebookPage href={facebookPage} />
+      <section>
+        <Note
+          placeholder="把陳情文字貼在這裡，方便複製貼上"
+          onClick={e => e.target.select()}
+        />
+      </section>
+      <section>
+        <FacebookPage href={facebookPage} />
+      </section>
       <section>
         <h1>
           <a href={prideWatchPage}>{name}</a>
