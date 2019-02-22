@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 
-import FacebookPage from 'components/FacebookPage';
+import FacebookPagePlugin from 'components/FacebookPagePlugin';
 import { nl2br } from 'lib/text';
 
 const DATA = [
@@ -72,7 +72,7 @@ function App() {
         />
       </section>
       <section>
-        <FacebookPage href={facebookPage} />
+        <FacebookPagePlugin href={facebookPage} />
       </section>
       <section>
         <h1>

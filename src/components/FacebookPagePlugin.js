@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import FBAsync from 'lib/FBAsync';
 
-function FacebookPage({ tabs = ['messages', 'timeline'], href = '' }) {
+function FacebookPagePlugin({ tabs = ['messages', 'timeline'], href = '' }) {
   const fbRoot = React.createRef();
 
   useEffect(() => {
@@ -26,4 +26,4 @@ function FacebookPage({ tabs = ['messages', 'timeline'], href = '' }) {
   );
 }
 
-export default React.memo(FacebookPage);
+export default React.memo(FacebookPagePlugin);
