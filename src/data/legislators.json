@@ -1,5 +1,6 @@
 [
   {
+    "id": 1,
     "area": "不分區",
     "party": "國民黨",
     "name": "王金平",
@@ -9,6 +10,7 @@
     "facebookPage": "https://www.facebook.com/jingping.tw/"
   },
   {
+    "id": 2,
     "area": "不分區",
     "party": "民進黨",
     "name": "尤美女",
@@ -18,6 +20,7 @@
     "facebookPage": "https://www.facebook.com/yumeinu/"
   },
   {
+    "id": 3,
     "area": "新竹市",
     "party": "民進黨",
     "name": "柯建銘",

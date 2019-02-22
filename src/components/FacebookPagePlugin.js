@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import FBAsync from 'lib/FBAsync';
 
 function FacebookPagePlugin({ tabs = ['messages', 'timeline'], href = '' }) {
-  const fbRoot = React.createRef();
+  const fbRoot = useRef(null);
 
   useEffect(() => {
     FBAsync.then(FB => {

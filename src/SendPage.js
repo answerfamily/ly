@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import FacebookPagePlugin from 'components/FacebookPagePlugin';
 import { nl2br } from 'lib/text';
 
-const Wrapper = styled.div`
+const PageContainer = styled.div`
   display: flex;
   padding: 40px;
 
@@ -37,7 +37,7 @@ function SendPage({ selectedLegislators = [] }) {
   } = selectedLegislators[idx];
 
   return (
-    <Wrapper>
+    <PageContainer>
       <section>
         <Note
           placeholder="把陳情文字貼在這裡，方便複製貼上"
@@ -57,7 +57,7 @@ function SendPage({ selectedLegislators = [] }) {
           下一位 》
         </Button>
       </section>
-    </Wrapper>
+    </PageContainer>
   );
 }
 
