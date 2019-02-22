@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import FBAsync from './lib/FBAsync';
+import FBAsync from 'lib/FBAsync';
 
 function FacebookPage({ tabs = ['messages', 'timeline'], href = '' }) {
   const fbRoot = React.createRef();

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 
-import FacebookPage from './FacebookPage';
-import { nl2br } from './lib/text';
+import FacebookPage from 'components/FacebookPage';
+import { nl2br } from 'lib/text';
 
 const DATA = [
   {
