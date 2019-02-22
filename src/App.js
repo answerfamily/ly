@@ -1,16 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import SendPage from './SendPage';
+import useLegislatorData from 'lib/useLegislatorData';
 
 function App() {
-  const [legislators, setLegislators] = useState(null);
-
-  useEffect(() => {
-    if (!legislators) {
-      import('./data/legislators.json').then(data =>
-        setLegislators(data.default)
-      );
-    }
-  });
+  const legislators = useLegislatorData();
 
   if (!legislators) {
     return <div>Loading...</div>;
