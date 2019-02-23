@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 
 import FacebookPagePlugin from 'components/FacebookPagePlugin';
@@ -26,21 +26,34 @@ const Note = styled.textarea`
   height: 100%;
 `;
 
-function SendPage({ selectedLegislators = [] }) {
-  const [idx, setIdx] = useState(0);
+function SendPage({
+  msg = '',
+  currentIdx = 0 /* -1 when done */,
+  selectedLegislators = [],
+
+  onMsgChange = () => {},
+  onNext = () => {},
+  onBack = () => {},
+}) {
+  if (currentIdx === -1) {
+    return <div>都做完囉！謝謝您 m(_ _)m</div>;
+  }
+
   const {
     name,
     prideWatchPage,
     position,
     desc,
     facebookPage,
-  } = selectedLegislators[idx];
+  } = selectedLegislators[currentIdx];
 
   return (
     <PageContainer>
       <section>
         <Note
           placeholder="把陳情文字貼在這裡，方便複製貼上"
+          onChange={e => onMsgChange(e.target.value)}
+          value={msg}
           onClick={e => e.target.select()}
         />
       </section>
@@ -53,9 +66,7 @@ function SendPage({ selectedLegislators = [] }) {
         </h1>
         <h2>{position}</h2>
         <p>{nl2br(desc)}</p>
-        <Button onClick={() => setIdx((idx + 1) % selectedLegislators.length)}>
-          下一位 》
-        </Button>
+        <Button onClick={onNext}>下一位 》</Button>
       </section>
     </PageContainer>
   );
