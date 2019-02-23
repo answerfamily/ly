@@ -49,10 +49,9 @@ function App() {
       );
 
     case 'send': {
-      const selectedLegislators = selectedLegislatorIds.map(id =>
-        legislators.find(legislator => legislator.id === id)
+      const selectedLegislators = selectedLegislatorIds.map(
+        id => legislatorMap[id]
       );
-
       const currentIdx = selectedLegislatorIds.findIndex(
         id => !doneLegislatorMap[id]
       );
