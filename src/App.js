@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import SettingsPage from './SettingsPage';
 import SendPage from './SendPage';
 import useLegislatorData from 'lib/useLegislatorData';
@@ -20,6 +20,26 @@ function App() {
   const [selectedLegislatorIds, setLegislatorIds] = useState([]); // list of selected legislator ID, with done legislators always in front.
   const [doneLegislatorMap, setLegislatorDone] = useState({}); // {[done legislator ID]: true, ...}
 
+  const handleSelectionChange = useCallback(
+    selectedLegislatorIds => {
+      setLegislatorIds(
+        selectedLegislatorIds.sort((aId, bId) => {
+          // First, put done legislators in front
+          if (doneLegislatorMap[aId] && !doneLegislatorMap[bId]) return -1;
+          if (!doneLegislatorMap[aId] && doneLegislatorMap[bId]) return 1;
+
+          // Then compare their positions
+          const aPos = POSITION_ORDER[legislatorMap[aId].position];
+          const bPos = POSITION_ORDER[legislatorMap[bId].position];
+          return aPos - bPos;
+        })
+      );
+    },
+    [setLegislatorIds, doneLegislatorMap, legislatorMap]
+  );
+
+  const handleSettingsSubmit = useCallback(() => setPage('send'), [setPage]);
+
   switch (page) {
     case 'settings':
       return (
@@ -28,23 +48,9 @@ function App() {
           onMsgChange={setMsg}
           legislators={legislators}
           selectedLegislatorIds={selectedLegislatorIds}
-          onSelectionChange={selectedLegislatorIds => {
-            setLegislatorIds(
-              selectedLegislatorIds.sort((aId, bId) => {
-                // First, put done legislators in front
-                if (doneLegislatorMap[aId] && !doneLegislatorMap[bId])
-                  return -1;
-                if (!doneLegislatorMap[aId] && doneLegislatorMap[bId]) return 1;
-
-                // Then compare their positions
-                const aPos = POSITION_ORDER[legislatorMap[aId].position];
-                const bPos = POSITION_ORDER[legislatorMap[bId].position];
-                return aPos - bPos;
-              })
-            );
-          }}
+          onSelectionChange={handleSelectionChange}
           doneLegislatorMap={doneLegislatorMap}
-          onSubmit={() => setPage('send')}
+          onSubmit={handleSettingsSubmit}
         />
       );
 
