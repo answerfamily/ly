@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import styled from '@emotion/styled';
+import LegislatorSections from './components/LegislatorSections';
 
 const PageContainer = styled.div`
   padding: 40px;
@@ -59,6 +60,12 @@ function SettingsPage({
           您選了 {selectedLegislatorIds.length} 名委員{doneStr}，大概要花
           {timeStr}。
         </p>
+        <LegislatorSections
+          legislators={legislators || []}
+          selectedLegislatorIds={selectedLegislatorIds}
+          doneLegislatorsMap={doneLegislatorsMap}
+          onSelectionChange={onSelectionChange}
+        />
         <button
           type="button"
           onClick={onSubmit}

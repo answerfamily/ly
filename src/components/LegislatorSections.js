@@ -1,5 +1,14 @@
 import React, { useMemo, useCallback } from 'react';
+import Checkbox from './Checkbox';
 
+/**
+ * Section of all legislators and controls
+ *
+ * @param {Object[]} props.legislator
+ * @param {String[]} props.selectedLegislatorIds
+ * @param {Object} props.doneLegislatorsMap - id to true map
+ * @param {function} props.onSelectionChange
+ */
 function LegislatorSections({
   legislators = [],
   selectedLegislatorIds = [],
@@ -12,20 +21,31 @@ function LegislatorSections({
         areas[legislator.area] = areas[legislator.area] || [];
         areas[legislator.area].push(legislator);
         return areas;
-      }),
+      }, {}),
     [legislators]
+  );
+
+  const selectedIdMap = useMemo(
+    () =>
+      selectedLegislatorIds.reduce((agg, id) => {
+        agg[id] = true;
+        return agg;
+      }, {}),
+    [selectedLegislatorIds]
   );
 
   return (
     <>
       <PositionSelector
         legislators={legislators}
-        selectedLegislatorIds={selectedLegislatorIds}
+        selectedIdMap={selectedIdMap}
         onChange={onSelectionChange}
       />
       {Object.keys(legislatorsByArea).map(area => (
         <LegislatorSection
           key={area}
+          area={area}
+          selectedIdMap={selectedIdMap}
           legislators={legislatorsByArea[area]}
           onChange={onSelectionChange}
         />
@@ -34,35 +54,76 @@ function LegislatorSections({
   );
 }
 
-function PositionSelector({
-  legislators,
-  selectedLegislatorIds,
-  onChange = () => {},
-}) {
-  const positions = useMemo(
+function PositionSelector({ legislators, selectedIdMap, onChange = () => {} }) {
+  // position to total map
+  const positionTotalMap = useMemo(
     () =>
-      Object.keys(
-        legislators.reduce((agg, { position }) => {
-          agg[position] = true;
-          return agg;
-        })
-      ),
+      legislators.reduce((agg, { id, position }) => {
+        agg[position] = agg[position] || 0;
+        agg[position] += 1;
+
+        return agg;
+      }, {}),
     [legislators]
+  );
+
+  // position to count map
+  const positionCountMap = useMemo(
+    () =>
+      legislators.reduce((agg, { id, position }) => {
+        agg[position] = agg[position] || 0;
+        if (selectedIdMap[id]) {
+          agg[position] += 1;
+        }
+        return agg;
+      }, {}),
+    [legislators, selectedIdMap]
   );
 
   const handleToggle = useCallback(
     e => {
       const toggledPosition = e.target.value;
+
+      if (positionCountMap[toggledPosition] === 0) {
+        // select all in platform
+        onChange(
+          legislators
+            .filter(
+              ({ position, id }) =>
+                position === toggledPosition || selectedIdMap[id]
+            )
+            .map(({ id }) => id)
+        );
+      } else {
+        // deselect all
+        onChange(
+          legislators
+            .filter(
+              ({ position, id }) =>
+                position !== toggledPosition && selectedIdMap[id]
+            )
+            .map(({ id }) => id)
+        );
+      }
     },
-    [legislators, selectedLegislatorIds, onChange]
+    [positionCountMap, legislators, onChange, selectedIdMap]
   );
 
   return (
     <ul>
-      {positions.map(p => (
-        <li>
+      {Object.keys(positionTotalMap).map(p => (
+        <li key={p}>
           <label>
-            <input type="checkbox" value={p} onClick={handleToggle} /> {p}
+            <Checkbox
+              value={p}
+              onChange={handleToggle}
+              checked={positionCountMap[p] === positionTotalMap[p]}
+              isIndeterminate={
+                0 < positionCountMap[p] &&
+                positionCountMap[p] < positionTotalMap[p]
+              }
+            />{' '}
+            {p}
           </label>
         </li>
       ))}
@@ -70,39 +131,80 @@ function PositionSelector({
   );
 }
 
+/**
+ * Legislator control of one section area
+ *
+ * @param {string} props.area - Legislator section area
+ * @param {object[]} props.legislators - legislators of this section
+ * @param {object} props.selectedIdMap
+ * @param {function} props.onChange
+ */
 function LegislatorSection({
   area = '',
   legislators = [],
-  selectedLegislatorIds,
+  selectedIdMap = {},
   onChange = () => {},
 }) {
+  const selectedCount = legislators.filter(({ id }) => selectedIdMap[id])
+    .length;
+
   const handleSectionToggle = useCallback(
     e => {
-      const toggledPosition = e.target.value;
+      if (selectedCount === 0) {
+        // Select all
+        onChange(legislators.map(({ id }) => id));
+      } else {
+        const legislatorMap = legislators.reduce((agg, { id }) => {
+          agg[id] = true;
+          return agg;
+        }, {});
+        // deselect all in legislators
+        onChange(Object.keys(selectedIdMap).filter(id => !legislatorMap[id]));
+      }
     },
-    [legislators, selectedLegislatorIds, onChange]
+    [legislators, onChange, selectedCount]
   );
 
   const handleSingleToggle = useCallback(
     e => {
-      const toggledPosition = e.target.value;
+      const selectedId = e.target.value;
+
+      if (selectedIdMap[selectedId]) {
+        // Deselect this
+        onChange(Object.keys(selectedIdMap).filter(id => id !== selectedId));
+      } else {
+        // Select this
+        onChange(Object.keys(selectedIdMap).concat(selectedId));
+      }
     },
-    [legislators, selectedLegislatorIds, onChange]
+    [legislators, selectedIdMap, onChange]
   );
 
   return (
     <section>
       <header>
         <label>
-          <input type="checkbox" onClick={handleSectionToggle} /> {area}
+          <Checkbox
+            onChange={handleSectionToggle}
+            isIndeterminate={
+              0 < selectedCount && selectedCount < legislators.length
+            }
+            checked={selectedCount === legislators.length}
+          />{' '}
+          {area}
         </label>
       </header>
       <ul>
-        {legislators.map(p => (
-          <li>
+        {legislators.map(({ id, name }) => (
+          <li key={id}>
             <label>
-              <input type="checkbox" value={p} onClick={handleSingleToggle} />{' '}
-              {p}
+              <Checkbox
+                key={id}
+                value={id}
+                onChange={handleSingleToggle}
+                checked={!!selectedIdMap[id]}
+              />{' '}
+              {name}
             </label>
           </li>
         ))}
