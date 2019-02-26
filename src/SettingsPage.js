@@ -32,7 +32,7 @@ function SettingsPage({
       </header>
 
       <section>
-        <h3>想要跟立委們說什麼呢？</h3>
+        <h3>想要跟委員們說什麼呢？</h3>
         <textarea value={msg} onChange={e => onMsgChange(e.target.value)} />
         <button
           type="button"
