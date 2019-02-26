@@ -16,7 +16,8 @@
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "data": "curl 'http://gsx2json.com/api?id=14aWeKOI6M44X0ApC2WF52OVRq13Ujr4MN9T1stPfFSc&sheet=1&columns=false' > ./src/data/legislators.json"
   },
   "eslintConfig": {
     "extends": "react-app"

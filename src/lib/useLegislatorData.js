@@ -13,7 +13,7 @@ function useLegislatorData() {
     if (legislators) return;
 
     import('data/legislators.json').then(data =>
-      setLegislators((legislatorData = data.default))
+      setLegislators((legislatorData = data.default.rows))
     );
   });
 
