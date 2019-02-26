@@ -2,6 +2,8 @@ import React, { useRef } from 'react';
 import styled from '@emotion/styled';
 import LegislatorSections from './components/LegislatorSections';
 
+const SECONDS_EACH_LEGISLATOR = 20;
+
 const PageContainer = styled.div`
   padding: 40px;
 `;
@@ -23,7 +25,12 @@ function SettingsPage({
   const doneStr = hasStarted
     ? `還有 ${legislatorToSendCount} 位委員要傳，`
     : '';
-  const timeStr = ' 10 秒';
+
+  const totalSeconds = SECONDS_EACH_LEGISLATOR * legislatorToSendCount;
+  const timeStr =
+    totalSeconds > 120
+      ? ` ${Math.floor(totalSeconds / 60)} 分鐘`
+      : ` ${totalSeconds} 秒`;
 
   return (
     <PageContainer>
@@ -57,8 +64,8 @@ function SettingsPage({
           全選啦！
         </button>
         <p>
-          您選了 {selectedLegislatorIds.length} 名委員{doneStr}，大概要花
-          {timeStr}。
+          您選了 {selectedLegislatorIds.length} 名委員{doneStr}，大概花
+          {timeStr}就能傳完。
         </p>
         <LegislatorSections
           legislators={legislators || []}
