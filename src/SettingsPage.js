@@ -8,6 +8,45 @@ const PageContainer = styled.div`
   padding: 40px;
 `;
 
+const Jumbotron = styled.header`
+  text-align: center;
+  padding: 30px 0;
+
+  h1 {
+    font-size: 40px;
+    font-weight: normal;
+    letter-spacing: 0.125em;
+    margin: 0;
+  }
+
+  h2 {
+    margin: 16px 0 0;
+    font-size: 14px;
+    letter-spacing: 0.5em;
+    font-weight: 200;
+  }
+
+  &::before {
+    content: '🏳️‍🌈';
+    font-size: 84px;
+    line-height: 1;
+  }
+`;
+
+const Emphasis = styled.em`
+  color: #845bf4;
+  font-style: normal;
+`;
+
+const Textarea = styled.textarea`
+  width: 100%;
+  border-radius: 4px;
+  padding: 8px;
+  border: 2px solid currentColor;
+  background: transparent;
+  color: #f29b61;
+`;
+
 function SettingsPage({
   msg = '',
   onMsgChange = () => {},
@@ -34,14 +73,25 @@ function SettingsPage({
 
   return (
     <PageContainer>
-      <header>
-        <h1>我愛家・我聯絡</h1>
+      <Jumbotron>
+        <h1>
+          我<Emphasis>愛家</Emphasis>・我聯絡
+        </h1>
         <h2>平權立院鍵盤陳情</h2>
-      </header>
+      </Jumbotron>
 
       <section>
-        <h3>想要跟委員們說什麼呢？</h3>
-        <textarea value={msg} onChange={e => onMsgChange(e.target.value)} />
+        <p>
+          讓同志能以<Emphasis>婚姻</Emphasis>成家，就是「
+          <Emphasis>愛家</Emphasis>」的表現。
+          在平權法案通過之前，讓我們動動手指頭，不分異同地向立法委員們表達我們
+          <Emphasis>希望讓同志可以結婚</Emphasis>的心聲吧！
+        </p>
+        <p>👨‍👨‍👧‍👦👨‍👩‍👧‍👦👩‍👩‍👧‍👦</p>
+        <label>
+          <h3>你想要跟委員們說什麼呢？</h3>
+          <Textarea value={msg} onChange={e => onMsgChange(e.target.value)} />
+        </label>
         <button
           type="button"
           onClick={() =>
