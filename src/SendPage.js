@@ -41,10 +41,10 @@ function SendPage({
 
   const {
     name,
-    prideWatchPage,
+    pridewatchpage,
     position,
     desc,
-    facebookPage,
+    facebookpage,
   } = selectedLegislators[currentIdx];
 
   return (
@@ -58,11 +58,11 @@ function SendPage({
         />
       </section>
       <section>
-        <FacebookPagePlugin href={facebookPage} />
+        <FacebookPagePlugin href={facebookpage} />
       </section>
       <section>
         <h1>
-          <a href={prideWatchPage}>{name}</a>
+          <a href={pridewatchpage}>{name}</a>
         </h1>
         <h2>{position}</h2>
         <p>{nl2br(desc)}</p>

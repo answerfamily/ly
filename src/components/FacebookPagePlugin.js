@@ -18,9 +18,11 @@ function FacebookPagePlugin({ tabs = ['messages', 'timeline'], href = '' }) {
         data-href={href}
         data-tabs={tabs.join(',')}
         data-small-header="true"
-        data-adapt-container-width="true"
+        data-adapt-container-width="false"
         data-show-facepile="false"
         data-hide-cta="true"
+        data-width="320"
+        data-height="500"
       />
     </div>
   );
