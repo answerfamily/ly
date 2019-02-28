@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import styled from '@emotion/styled';
 import LegislatorSections from './components/LegislatorSections';
+import SpinningIcon from './components/SpinningIcon';
 
 const SECONDS_EACH_LEGISLATOR = 20;
 
@@ -24,12 +25,6 @@ const Jumbotron = styled.header`
     font-size: 14px;
     letter-spacing: 0.5em;
     font-weight: 200;
-  }
-
-  &::before {
-    content: '🏳️‍🌈';
-    font-size: 84px;
-    line-height: 1;
   }
 `;
 
@@ -74,6 +69,7 @@ function SettingsPage({
   return (
     <PageContainer>
       <Jumbotron>
+        <SpinningIcon icons={['🏠', '👨‍👨‍👧‍👦', '🏠', '👩‍👩‍👧‍👦', '🏠', '👨‍👩‍👧‍👦']} />
         <h1>
           我<Emphasis>愛家</Emphasis>・我聯絡
         </h1>
