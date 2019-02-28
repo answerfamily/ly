@@ -1,11 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 
 import FBAsync from 'lib/FBAsync';
 
 function FacebookPagePlugin({ tabs = ['messages', 'timeline'], href = '' }) {
   const fbRoot = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     FBAsync.then(FB => {
       FB.XFBML.parse(fbRoot.current);
     });
