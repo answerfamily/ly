@@ -6,6 +6,7 @@ import cogoToast from 'cogo-toast';
 import Textarea from 'components/Textarea';
 import Divider from 'components/Divider';
 import FacebookPagePlugin from 'components/FacebookPagePlugin';
+import SpinningIcon from './components/SpinningIcon';
 
 const Header = styled.header`
   position: fixed;
@@ -207,9 +208,31 @@ function SendPage({
   }, [submitStepRef, onNext, handleCopy]);
 
   if (currentIdx === -1) {
-    return <div>都做完囉！謝謝您 m(_ _)m</div>;
+    // Show finish screen
+    return (
+      <Container
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexFlow: 'column',
+        }}
+      >
+        <SpinningIcon icons={['🏳️‍🌈', '🙇‍♀️', '🙇‍♂️']} />
+        <p>完成囉！謝謝您 m(_ _)m</p>
+        <p>
+          <BorderedButton
+            style={{ padding: 16, fontSize: 16 }}
+            onClick={onBack}
+          >
+            回首頁
+          </BorderedButton>
+        </p>
+      </Container>
+    );
   }
 
+  // Data not loaded yet
   if (!selectedLegislators || !selectedLegislators[currentIdx]) {
     return null;
   }
