@@ -13,15 +13,25 @@ body {
 }
 
 a {
-  color: #6cb8f8;
+  color: #53BAFF;
 }
 
 button {
-  color: #ea5f6a;
-  border: 2px solid currentColor;
+  color: rgba(255, 255, 255, 0.88);
+  border: 0;
   border-radius: 4px;
-  padding: 8px 16px;
-  background: transparent;
+  padding: 10px 24px;
+  background: #FF5368;
+  transition: .1s background;
+}
+
+button:hover {
+  background: hsl(353,100%,56%);
+}
+
+button:active {
+  background: hsl(353,100%,46%);
+  outline: 0;
 }
 
 button:disabled {
