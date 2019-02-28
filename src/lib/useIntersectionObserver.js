@@ -1,3 +1,4 @@
+import 'intersection-observer'; // polyfill
 import { useRef, useLayoutEffect } from 'react';
 
 function useIntersectionObserver(elem = null, onView = () => {}) {
