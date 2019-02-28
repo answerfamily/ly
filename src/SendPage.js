@@ -75,6 +75,7 @@ const Container = styled.div`
   @media screen and (min-width: 1024px) {
     display: flex;
     max-width: 1280px;
+    height: 100vh;
     padding: 60px 40px 40px;
     margin: 0 auto;
 
@@ -125,6 +126,25 @@ const NextButton = styled(Button)`
   &:hover::after {
     transform: translate(8px, 0) rotate(45deg);
   }
+`;
+
+const LegislatorData = styled.article`
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+
+  /* hiding scrollbar */
+  padding-right: 20px;
+  margin-right: -20px;
+
+  /* gradient appear & disappear */
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 6%,
+    black 94%,
+    transparent
+  );
 `;
 
 const PluginWrapper = styled.div`
@@ -266,28 +286,39 @@ function SendPage({
         />
       </Header>
       <Container>
-        <section>
+        <section
+          style={{
+            /* hiding scrollbar of LegislatorData */
+            overflowX: 'hidden',
+          }}
+        >
           <h1>{name}</h1>
-          <p>{position}</p>
-          {description && (
-            <ul style={{ padding: 0 }}>
-              {description.split('\n').map((desc, idx) => (
-                <li key={idx}>{desc}</li>
-              ))}
-            </ul>
-          )}
-          <p>
-            {party}・{area}
-            {subarea ? `／${subarea}` : null}
-          </p>
-          {religion ? <p>{religion}</p> : null}
-          <p>
-            <a href={pridewatchpage} target="_blank" rel="noopener noreferrer">
-              PrideWatch 頁面
-            </a>
-          </p>
-          <Divider />
-          <Footer style={{ marginTop: 'auto' }}>
+          <LegislatorData>
+            <p>{position}</p>
+            {description && (
+              <ul style={{ padding: 0 }}>
+                {description.split('\n').map((desc, idx) => (
+                  <li key={idx}>{desc}</li>
+                ))}
+              </ul>
+            )}
+            <p>
+              {party}・{area}
+              {subarea ? `／${subarea}` : null}
+            </p>
+            {religion ? <p>{religion}</p> : null}
+            <p>
+              <a
+                href={pridewatchpage}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                PrideWatch 頁面
+              </a>
+            </p>
+          </LegislatorData>
+          <Footer>
+            <Divider />
             <p>
               資料來源：
               <a
