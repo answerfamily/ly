@@ -1,12 +1,15 @@
-import React, { useRef } from 'react';
+import React, { useRef, useCallback } from 'react';
 import styled from '@emotion/styled';
 import LegislatorSections from './components/LegislatorSections';
 import SpinningIcon from './components/SpinningIcon';
+import Divider from './components/Divider';
 
 const SECONDS_EACH_LEGISLATOR = 20;
 
 const PageContainer = styled.div`
   padding: 40px;
+  max-width: 720px;
+  margin: 0 auto;
 `;
 
 const Jumbotron = styled.header`
@@ -14,14 +17,17 @@ const Jumbotron = styled.header`
   padding: 30px 0;
 
   h1 {
-    font-size: 40px;
+    font-size: 28px;
     font-weight: normal;
     letter-spacing: 0.125em;
-    margin: 0;
+    margin: 16px 0;
+    @media screen and (min-width: 425px) {
+      font-size: 40px;
+    }
   }
 
   h2 {
-    margin: 16px 0 0;
+    margin: 0;
     font-size: 14px;
     letter-spacing: 0.5em;
     font-weight: 200;
@@ -29,17 +35,25 @@ const Jumbotron = styled.header`
 `;
 
 const Emphasis = styled.em`
-  color: #845bf4;
+  color: #8f53ff;
   font-style: normal;
 `;
 
 const Textarea = styled.textarea`
   width: 100%;
-  border-radius: 4px;
+  border-radius: 8px;
   padding: 8px;
   border: 2px solid currentColor;
-  background: transparent;
-  color: #f29b61;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ff9753;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.22);
+  }
+
+  &:focus {
+    background: transparent;
+  }
 `;
 
 function SettingsPage({
@@ -66,6 +80,15 @@ function SettingsPage({
       ? ` ${Math.floor(totalSeconds / 60)} 分鐘`
       : ` ${totalSeconds} 秒`;
 
+  const handleNextClick = useCallback(
+    () =>
+      selectionSectionRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      }),
+    [selectionSectionRef]
+  );
+
   return (
     <PageContainer>
       <Jumbotron>
@@ -78,27 +101,23 @@ function SettingsPage({
 
       <section>
         <p>
-          讓同志能以<Emphasis>婚姻</Emphasis>成家，就是「
-          <Emphasis>愛家</Emphasis>」的表現。
+          讓同志能以<Emphasis>婚姻</Emphasis>成家，就是「愛家」的表現。
           在平權法案通過之前，讓我們動動手指頭，不分異同地向立法委員們表達我們
           <Emphasis>希望讓同志可以結婚</Emphasis>的心聲吧！
         </p>
-        <p>👨‍👨‍👧‍👦👨‍👩‍👧‍👦👩‍👩‍👧‍👦</p>
+        <Divider />
         <label>
           <h3>你想要跟委員們說什麼呢？</h3>
-          <Textarea value={msg} onChange={e => onMsgChange(e.target.value)} />
+          <Textarea
+            value={msg}
+            onChange={e => onMsgChange(e.target.value)}
+            rows={5}
+          />
         </label>
-        <button
-          type="button"
-          onClick={() =>
-            selectionSectionRef.current.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start',
-            })
-          }
-        >
+        <button type="button" onClick={handleNextClick}>
           下一步
         </button>
+        <Divider />
       </section>
 
       <section ref={selectionSectionRef}>
