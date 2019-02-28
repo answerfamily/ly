@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useRef, useCallback } from 'react';
 import styled from '@emotion/styled';
 import AutoSizer from 'react-virtualized-auto-sizer';
+import cogoToast from 'cogo-toast';
 
 import Textarea from 'components/Textarea';
 import FacebookPagePlugin from 'components/FacebookPagePlugin';
@@ -53,6 +54,29 @@ function SendPage({
   onNext = () => {},
   onBack = () => {},
 }) {
+  const textareaRef = useRef(null);
+  const submitStepRef = useRef(null);
+
+  const handleCopy = useCallback(() => {
+    textareaRef.current.select();
+    document.execCommand('copy');
+    cogoToast.success(`「${msg.slice(0, 10)}⋯⋯」已複製到剪貼簿`, {
+      position: 'bottom-center',
+    });
+    submitStepRef.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  }, [textareaRef, submitStepRef]);
+
+  const handleNext = useCallback(() => {
+    submitStepRef.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+    onNext();
+  }, [submitStepRef, onNext, handleCopy]);
+
   if (currentIdx === -1) {
     return <div>都做完囉！謝謝您 m(_ _)m</div>;
   }
@@ -79,13 +103,15 @@ function SendPage({
         <section>
           <h1>1. 複製文字</h1>
           <Textarea
+            ref={textareaRef}
             placeholder="把陳情文字貼在這裡，方便複製貼上"
             onChange={e => onMsgChange(e.target.value)}
             value={msg}
             onClick={e => e.target.select()}
           />
+          <button onClick={handleCopy}>複製文字</button>
         </section>
-        <section>
+        <section ref={submitStepRef}>
           <h1>2. 貼上並送出</h1>
           <PluginWrapper>
             <AutoSizer>
@@ -115,7 +141,7 @@ function SendPage({
           </h1>
           <h2>{position}</h2>
           <p>{nl2br(desc)}</p>
-          <Button onClick={onNext}>下一位 》</Button>
+          <Button onClick={handleNext}>下一位 》</Button>
         </section>
       </Container>
     </>

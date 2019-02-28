@@ -45,3 +45,8 @@ button:active {
 button:disabled {
   opacity: 0.4;
 }
+
+/* cogo-tooltip */
+#ct-container {
+  color: #333;
+}
