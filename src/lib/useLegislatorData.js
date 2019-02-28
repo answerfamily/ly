@@ -13,7 +13,11 @@ function useLegislatorData() {
     if (legislators) return;
 
     import('data/legislators.json').then(data =>
-      setLegislators((legislatorData = data.default.rows))
+      setLegislators(
+        (legislatorData = /* filter out legislators that has no PrideWatch data */ data.default.rows.filter(
+          ({ area }) => !!area
+        ))
+      )
     );
   });
 
