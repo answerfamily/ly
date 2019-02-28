@@ -20,7 +20,7 @@ const Jumbotron = styled.header`
     font-size: 28px;
     font-weight: normal;
     letter-spacing: 0.125em;
-    margin: 16px 0;
+    margin: 24px 0 16px;
     @media screen and (min-width: 425px) {
       font-size: 40px;
     }
@@ -54,6 +54,11 @@ const Textarea = styled.textarea`
   &:focus {
     background: transparent;
   }
+`;
+
+const Footer = styled.footer`
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
 `;
 
 function SettingsPage({
@@ -146,6 +151,30 @@ function SettingsPage({
           {hasStarted ? '繼續' : '開始'}陳情
         </button>
       </section>
+      <Footer>
+        <Divider content="🏳️‍🌈" />
+
+        <p>
+          此工具為
+          <a href="https://www.facebook.com/groups/answerfamily/">
+            《我愛家我解惑 - 平權社會對話工程》社群
+          </a>
+          參與者提供之
+          <a href="https://github.com/answerfamily/ly">開放原始碼</a>專案。
+        </p>
+
+        <p>
+          Background icons:{' '}
+          <a
+            href="https://thenounproject.com/nookfulloption/collection/space2"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Space2
+          </a>{' '}
+          by Nook Fulloption from the Noun Project
+        </p>
+      </Footer>
     </PageContainer>
   );
 }

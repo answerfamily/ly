@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-function Divider(props) {
+function Divider({ content = '👨‍👨‍👧‍👦👨‍👩‍👧‍👦👩‍👩‍👧‍👦', ...props }) {
   return (
     <p {...props}>
       <span role="img" aria-label="Horizontal ruler">
-        👨‍👨‍👧‍👦👨‍👩‍👧‍👦👩‍👩‍👧‍👦
+        {content}
       </span>
     </p>
   );
