@@ -4,8 +4,8 @@ import AutoSizer from 'react-virtualized-auto-sizer';
 import cogoToast from 'cogo-toast';
 
 import Textarea from 'components/Textarea';
+import Divider from 'components/Divider';
 import FacebookPagePlugin from 'components/FacebookPagePlugin';
-import { nl2br } from 'lib/text';
 
 const Header = styled.header`
   position: absolute;
@@ -94,6 +94,11 @@ const FlexTextarea = styled(Textarea)`
   flex: 1;
 `;
 
+const Footer = styled.footer`
+  font-size: 12px;
+  opacity: 0.88;
+`;
+
 function SendPage({
   msg = '',
   currentIdx = 0 /* -1 when done */,
@@ -110,6 +115,7 @@ function SendPage({
   const handleCopy = useCallback(() => {
     textareaRef.current.select();
     document.execCommand('copy');
+    textareaRef.current.blur();
     cogoToast.success(`「${msg.slice(0, 10)}⋯⋯」已複製到剪貼簿`, {
       position: 'bottom-center',
     });
@@ -139,7 +145,11 @@ function SendPage({
     name,
     pridewatchpage,
     position,
-    desc,
+    description,
+    party,
+    area,
+    religion,
+    subarea,
     facebookpage,
   } = selectedLegislators[currentIdx];
 
@@ -151,11 +161,38 @@ function SendPage({
       </Header>
       <Container>
         <section>
-          <h1>
-            <a href={pridewatchpage}>{name}</a>
-          </h1>
-          <h2>{position}</h2>
-          <p>{nl2br(desc)}</p>
+          <h1>{name}</h1>
+          <p>{position}</p>
+          {description && (
+            <ul style={{ padding: 0 }}>
+              {description.split('\n').map((desc, idx) => (
+                <li key={idx}>{desc}</li>
+              ))}
+            </ul>
+          )}
+          <p>
+            {party}・{area}
+            {subarea ? `／${subarea}` : null}
+          </p>
+          {religion ? <p>{religion}</p> : null}
+          <p>
+            <a href={pridewatchpage} target="_blank" rel="noopener noreferrer">
+              PrideWatch 頁面
+            </a>
+          </p>
+          <Divider />
+          <Footer style={{ marginTop: 'auto' }}>
+            <p>
+              資料來源：
+              <a
+                href="https://www.pridewatch.tw/beta/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                PrideWatch Taiwan 同志人權立場觀測站
+              </a>
+            </p>
+          </Footer>
         </section>
         <section>
           <h1>1. 複製文字</h1>
@@ -164,7 +201,6 @@ function SendPage({
             placeholder="把陳情文字貼在這裡，方便複製貼上"
             onChange={e => onMsgChange(e.target.value)}
             value={msg}
-            onClick={e => e.target.select()}
             rows={5}
           />
           <p>
