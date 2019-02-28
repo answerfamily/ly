@@ -1,3 +1,5 @@
+# 我愛家我聯絡 - 平權立院鍵盤陳情
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -61,8 +63,12 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/ad
 
 ### Deployment
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+Run `npm run deploy` to build and deploy to `origin`'s `gh-pages` branch.
 
-### `npm run build` fails to minify
+### Fetch legislator data
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Run `npm run data` to update `src/data/legislators.json`.
+
+### Lint
+
+Run `npm run lint` to lint code.
