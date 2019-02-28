@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useCallback } from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 
 import waitForFB from 'lib/waitForFB';
 
