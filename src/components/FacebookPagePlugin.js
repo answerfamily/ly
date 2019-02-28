@@ -1,6 +1,6 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef, useCallback } from 'react';
 
-import FBAsync from 'lib/FBAsync';
+import waitForFB from 'lib/waitForFB';
 
 const DEFAULT_TABS = ['messages', 'timeline'];
 
@@ -14,7 +14,9 @@ function FacebookPagePlugin({
   const fbRoot = useRef(null);
 
   useLayoutEffect(() => {
-    FBAsync.then(FB => FB.XFBML.parse(fbRoot.current));
+    waitForFB.then(() => {
+      window.FB.XFBML.parse(fbRoot.current);
+    });
   }, [tabs, href, width]); // Mobile keyboard will trigger height change, don't re-parse by it
 
   return (
