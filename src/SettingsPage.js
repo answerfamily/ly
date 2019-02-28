@@ -135,12 +135,14 @@ function SettingsPage({
       <section ref={selectionSectionRef}>
         <Divider />
         <h3>請選擇要陳情的立委</h3>
-        <button
-          type="button"
-          onClick={() => onSelectionChange(legislators.map(({ id }) => id))}
-        >
-          全選啦！
-        </button>
+        <p>
+          <button
+            type="button"
+            onClick={() => onSelectionChange(legislators.map(({ id }) => id))}
+          >
+            我全部都要！
+          </button>
+        </p>
         <LegislatorSections
           legislators={legislators || []}
           selectedLegislatorIds={selectedLegislatorIds}

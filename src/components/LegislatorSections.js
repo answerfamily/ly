@@ -1,5 +1,43 @@
 import React, { useMemo, useCallback } from 'react';
+import styled from '@emotion/styled';
 import Checkbox from './Checkbox';
+
+const Container = styled.div`
+  li {
+    display: inline-block;
+  }
+
+  label {
+    min-width: 105px;
+    padding-right: 1em;
+  }
+
+  input {
+    margin-right: 0.5em;
+  }
+`;
+
+const CheckboxList = styled.ul`
+  list-style: none;
+  padding: 0;
+`;
+
+const PositionCheckboxList = styled(CheckboxList)`
+  background: rgba(0, 0, 0, 0.2);
+  padding: 16px 24px;
+  border-radius: 8px;
+`;
+
+const Section = styled.section`
+  margin: 40px 0;
+  header {
+    font-size: 20px;
+    border-bottom: 2px dotted rgba(255, 255, 255, 0.12);
+    label {
+      padding: 8px 0;
+    }
+  }
+`;
 
 /**
  * Section of all legislators and controls
@@ -35,7 +73,7 @@ function LegislatorSections({
   );
 
   return (
-    <>
+    <Container>
       <PositionSelector
         legislators={legislators}
         selectedIdMap={selectedIdMap}
@@ -50,7 +88,7 @@ function LegislatorSections({
           onChange={onSelectionChange}
         />
       ))}
-    </>
+    </Container>
   );
 }
 
@@ -110,7 +148,7 @@ function PositionSelector({ legislators, selectedIdMap, onChange = () => {} }) {
   );
 
   return (
-    <ul>
+    <PositionCheckboxList>
       {Object.keys(positionTotalMap).map(p => (
         <li key={p}>
           <label>
@@ -127,7 +165,7 @@ function PositionSelector({ legislators, selectedIdMap, onChange = () => {} }) {
           </label>
         </li>
       ))}
-    </ul>
+    </PositionCheckboxList>
   );
 }
 
@@ -181,7 +219,7 @@ function LegislatorSection({
   );
 
   return (
-    <section>
+    <Section>
       <header>
         <label>
           <Checkbox
@@ -194,7 +232,7 @@ function LegislatorSection({
           {area}
         </label>
       </header>
-      <ul>
+      <CheckboxList>
         {legislators.map(({ id, name }) => (
           <li key={id}>
             <label>
@@ -208,8 +246,8 @@ function LegislatorSection({
             </label>
           </li>
         ))}
-      </ul>
-    </section>
+      </CheckboxList>
+    </Section>
   );
 }
 
