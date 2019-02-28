@@ -8,7 +8,58 @@ import Divider from 'components/Divider';
 import FacebookPagePlugin from 'components/FacebookPagePlugin';
 
 const Header = styled.header`
+  position: fixed;
+  background: rgba(0, 0, 0, 0.88);
+  -webkit-backdrop-filter: blur(16px);
+
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  display: flex;
+  align-items: center;
+
+  span {
+    margin: 0 auto;
+  }
+`;
+
+const HeaderProgress = styled.div`
   position: absolute;
+  z-index: -1;
+  background: #7ed321;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+
+  transition: width 0.75s ease-out;
+`;
+
+const Back = styled.div`
+  display: flex;
+  align-items: center;
+
+  padding-left: 16px;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+
+  cursor: pointer;
+  font-size: 14px;
+
+  &::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    margin-right: 8px;
+    border-top: 1px solid #fff;
+    border-left: 1px solid #fff;
+    transform: rotate(-45deg);
+  }
+
+  &:hover {
+    opacity: 1;
+  }
 `;
 
 const Container = styled.div`
@@ -50,6 +101,28 @@ const BorderedButton = styled(Button)`
 
   &:hover {
     color: #fff;
+  }
+`;
+
+const NextButton = styled(Button)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &::after {
+    margin-left: 16px;
+    content: '';
+    width: 16px;
+    height: 16px;
+    border-top: 2px solid #fff;
+    border-right: 2px solid #fff;
+    border-radius: 2px;
+    transform: rotate(45deg);
+    transition: transform 0.15s ease-out;
+  }
+
+  &:hover::after {
+    transform: translate(8px, 0) rotate(45deg);
   }
 `;
 
@@ -156,8 +229,18 @@ function SendPage({
   return (
     <>
       <Header>
-        <button onClick={onBack}>Back</button>
-        {currentIdx + 1} / {selectedLegislators.length}
+        <Back onClick={onBack}>設定立委</Back>
+        <span>
+          {currentIdx + 1} / {selectedLegislators.length}
+        </span>
+        <HeaderProgress
+          style={{
+            width: `${(
+              (100 * (currentIdx + 1)) /
+              selectedLegislators.length
+            ).toFixed(2)}%`,
+          }}
+        />
       </Header>
       <Container>
         <section>
@@ -235,7 +318,7 @@ function SendPage({
             <span>↑↑</span>
           </Hint>
           <p>
-            <Button onClick={handleNext}>下一位</Button>
+            <NextButton onClick={handleNext}>下一位</NextButton>
           </p>
         </section>
       </Container>
