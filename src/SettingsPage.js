@@ -1,10 +1,12 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useState } from 'react';
 import styled from '@emotion/styled';
+
 import LegislatorSections from './components/LegislatorSections';
 import SpinningIcon from './components/SpinningIcon';
 import Divider from './components/Divider';
 
-const SECONDS_EACH_LEGISLATOR = 20;
+import useIntersectionObserver from './lib/useIntersectionObserver';
+import StartButton from './components/StartButton';
 
 const PageContainer = styled.div`
   padding: 40px;
@@ -44,21 +46,25 @@ const Textarea = styled.textarea`
   border-radius: 8px;
   padding: 8px;
   border: 2px solid currentColor;
-  background: rgba(255, 255, 255, 0.12);
+  background-color: rgba(255, 255, 255, 0.12);
   color: #ff9753;
+  transition: background-color 0.2s;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.22);
+    background-color: rgba(255, 255, 255, 0.22);
   }
 
   &:focus {
-    background: transparent;
+    background-color: rgba(0, 0, 0, 0.2);
+    outline: 0;
   }
 `;
 
 const Footer = styled.footer`
   font-size: 12px;
   color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  padding-bottom: 64px;
 `;
 
 function SettingsPage({
@@ -71,19 +77,7 @@ function SettingsPage({
   onSubmit = () => {},
 }) {
   const selectionSectionRef = useRef(null);
-  const hasStarted = Object.keys(doneLegislatorsMap).length > 0;
-  const legislatorToSendCount = selectedLegislatorIds.filter(
-    id => !doneLegislatorsMap[id]
-  ).length;
-  const doneStr = hasStarted
-    ? `還有 ${legislatorToSendCount} 位委員要傳，`
-    : '';
-
-  const totalSeconds = SECONDS_EACH_LEGISLATOR * legislatorToSendCount;
-  const timeStr =
-    totalSeconds > 120
-      ? ` ${Math.floor(totalSeconds / 60)} 分鐘`
-      : ` ${totalSeconds} 秒`;
+  const [isSelectionInView, setSelectionInView] = useState(false);
 
   const handleNextClick = useCallback(
     () =>
@@ -92,6 +86,19 @@ function SettingsPage({
         block: 'start',
       }),
     [selectionSectionRef]
+  );
+
+  const handleSelectionIntersect = useCallback(entries => {
+    if (entries[0].isIntersecting) {
+      setSelectionInView(true);
+    } else {
+      setSelectionInView(false);
+    }
+  });
+
+  useIntersectionObserver(
+    selectionSectionRef.current,
+    handleSelectionIntersect
   );
 
   return (
@@ -117,15 +124,16 @@ function SettingsPage({
             value={msg}
             onChange={e => onMsgChange(e.target.value)}
             rows={5}
+            autoFocus
           />
         </label>
         <button type="button" onClick={handleNextClick}>
           下一步
         </button>
-        <Divider />
       </section>
 
       <section ref={selectionSectionRef}>
+        <Divider />
         <h3>請選擇要陳情的立委</h3>
         <button
           type="button"
@@ -133,23 +141,18 @@ function SettingsPage({
         >
           全選啦！
         </button>
-        <p>
-          您選了 {selectedLegislatorIds.length} 名委員{doneStr}，大概花
-          {timeStr}就能傳完。
-        </p>
         <LegislatorSections
           legislators={legislators || []}
           selectedLegislatorIds={selectedLegislatorIds}
           doneLegislatorsMap={doneLegislatorsMap}
           onSelectionChange={onSelectionChange}
         />
-        <button
-          type="button"
+        <StartButton
+          show={isSelectionInView}
+          selectedLegislatorIds={selectedLegislatorIds}
+          doneLegislatorsMap={doneLegislatorsMap}
           onClick={onSubmit}
-          disabled={legislatorToSendCount === 0}
-        >
-          {hasStarted ? '繼續' : '開始'}陳情
-        </button>
+        />
       </section>
       <Footer>
         <Divider content="🏳️‍🌈" />

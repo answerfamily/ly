@@ -4,13 +4,21 @@
 
 body {
   padding: 0;
-  background: #272822;
+  background: #272822 url('./bg.svg') top center no-repeat;
+  background-size: contain;
 
   color: rgba(255, 255, 255, 0.88);
   font: 16px/1.6 思源黑體, "Source Han Sans", "Noto Sans CJK TC", 蘋方-繁, "PingFang TC", 微軟正黑體, "Microsoft JhengHei", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+@media screen and (min-width: 1024px) {
+  body {
+    background-image: url('./bg-large.svg');
+  }
+}
+
 
 a {
   color: #53BAFF;
@@ -21,16 +29,16 @@ button {
   border: 0;
   border-radius: 4px;
   padding: 10px 24px;
-  background: #FF5368;
-  transition: .1s background;
+  background-color: #FF5368;
+  transition: background-color .2s ease;
 }
 
 button:hover {
-  background: hsl(353,100%,56%);
+  background-color: hsl(353,100%,56%);
 }
 
 button:active {
-  background: hsl(353,100%,46%);
+  background-color: hsl(353,100%,46%);
   outline: 0;
 }
 
