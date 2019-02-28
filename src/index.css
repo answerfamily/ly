@@ -5,7 +5,7 @@
 body {
   padding: 0;
   background: #272822 url('./bg.svg') top center no-repeat;
-  background-size: contain;
+  background-size: 100% auto;
 
   color: rgba(255, 255, 255, 0.88);
   font: 16px/1.6 思源黑體, "Source Han Sans", "Noto Sans CJK TC", 蘋方-繁, "PingFang TC", 微軟正黑體, "Microsoft JhengHei", sans-serif;

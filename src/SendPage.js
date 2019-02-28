@@ -7,21 +7,30 @@ import Textarea from 'components/Textarea';
 import FacebookPagePlugin from 'components/FacebookPagePlugin';
 import { nl2br } from 'lib/text';
 
-const Header = styled.header``;
+const Header = styled.header`
+  position: absolute;
+`;
 
 const Container = styled.div`
-  padding: 20px;
+  padding: 60px 20px 20px;
+  min-height: 100vh;
+
+  section {
+    display: flex;
+    flex-flow: column;
+  }
 
   @media screen and (min-width: 1024px) {
     display: flex;
-    max-width: 720px;
-    padding: 20px;
+    max-width: 1280px;
+    padding: 60px 40px 40px;
     margin: 0 auto;
 
     section {
-      flex: 1;
+      flex: 3;
       padding-left: 24px;
       &:first-of-type {
+        flex: 2;
         padding-left: 0;
       }
     }
@@ -29,19 +38,60 @@ const Container = styled.div`
 `;
 
 const Button = styled.button`
-  font-size: 32px;
+  width: 100%;
+  font-size: 28px;
+`;
+
+const BorderedButton = styled(Button)`
+  padding: 8px 0;
+  border: 2px solid #ff5368;
+  background: transparent;
+  color: #ff5368;
+
+  &:hover {
+    color: #fff;
+  }
 `;
 
 const PluginWrapper = styled.div`
   position: relative; /* for AutoSizer */
-  height: 60vh;
+  flex: 1 1 60vh;
+
+  border: 2px solid #ff9753;
+  border-bottom: 0;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+  overflow: hidden;
 
   .preload-iframe {
     position: absolute;
     opacity: 0;
+    top: 0;
     left: 0;
     z-index: -1;
   }
+
+  @media screen and (min-width: 1024px) {
+    flex-basis: auto;
+  }
+`;
+
+const Hint = styled.div`
+  display: flex;
+  background: #ff9753;
+  padding: 4px;
+  border-top: 0;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  font-size: 14px;
+
+  span {
+    margin: 0 1em 0 auto;
+  }
+`;
+
+const FlexTextarea = styled(Textarea)`
+  flex: 1;
 `;
 
 function SendPage({
@@ -101,15 +151,25 @@ function SendPage({
       </Header>
       <Container>
         <section>
+          <h1>
+            <a href={pridewatchpage}>{name}</a>
+          </h1>
+          <h2>{position}</h2>
+          <p>{nl2br(desc)}</p>
+        </section>
+        <section>
           <h1>1. 複製文字</h1>
-          <Textarea
+          <FlexTextarea
             ref={textareaRef}
             placeholder="把陳情文字貼在這裡，方便複製貼上"
             onChange={e => onMsgChange(e.target.value)}
             value={msg}
             onClick={e => e.target.select()}
+            rows={5}
           />
-          <button onClick={handleCopy}>複製文字</button>
+          <p>
+            <BorderedButton onClick={handleCopy}>複製</BorderedButton>
+          </p>
         </section>
         <section ref={submitStepRef}>
           <h1>2. 貼上並送出</h1>
@@ -119,29 +179,28 @@ function SendPage({
                 <FacebookPagePlugin
                   key={currentIdx}
                   href={facebookpage}
-                  width={width}
-                  height={height}
+                  width={width - 4 /* left/right border width */}
+                  height={height - 2 /* top border width */}
                 />,
                 selectedLegislators[currentIdx + 1] && (
                   <FacebookPagePlugin
                     className="preload-iframe"
                     key={currentIdx + 1}
                     href={selectedLegislators[currentIdx + 1].facebookpage}
-                    width={width}
-                    height={height}
+                    width={width - 4 /* left/right border width */}
+                    height={height - 2 /* top border width */}
                   />
                 ),
               ]}
             </AutoSizer>
           </PluginWrapper>
-        </section>
-        <section>
-          <h1>
-            <a href={pridewatchpage}>{name}</a>
-          </h1>
-          <h2>{position}</h2>
-          <p>{nl2br(desc)}</p>
-          <Button onClick={handleNext}>下一位 》</Button>
+          <Hint>
+            ＊ 記得要按「發送」才會送出唷！
+            <span>↑↑</span>
+          </Hint>
+          <p>
+            <Button onClick={handleNext}>下一位</Button>
+          </p>
         </section>
       </Container>
     </>
