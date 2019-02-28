@@ -2,17 +2,23 @@ import React, { useLayoutEffect, useRef } from 'react';
 
 import FBAsync from 'lib/FBAsync';
 
-function FacebookPagePlugin({ tabs = ['messages', 'timeline'], href = '' }) {
+const DEFAULT_TABS = ['messages', 'timeline'];
+
+function FacebookPagePlugin({
+  className = '',
+  tabs = DEFAULT_TABS,
+  href = '',
+  width = 320,
+  height = 500,
+}) {
   const fbRoot = useRef(null);
 
   useLayoutEffect(() => {
-    FBAsync.then(FB => {
-      FB.XFBML.parse(fbRoot.current);
-    });
-  });
+    FBAsync.then(FB => FB.XFBML.parse(fbRoot.current));
+  }, [tabs, href, width]); // Mobile keyboard will trigger height change, don't re-parse by it
 
   return (
-    <div ref={fbRoot}>
+    <div ref={fbRoot} className={className}>
       <div
         className="fb-page"
         data-href={href}
@@ -21,8 +27,8 @@ function FacebookPagePlugin({ tabs = ['messages', 'timeline'], href = '' }) {
         data-adapt-container-width="false"
         data-show-facepile="false"
         data-hide-cta="true"
-        data-width="320"
-        data-height="500"
+        data-width={width}
+        data-height={height}
       />
     </div>
   );

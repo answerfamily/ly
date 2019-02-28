@@ -1,6 +1,7 @@
 import React, { useRef, useCallback, useState } from 'react';
 import styled from '@emotion/styled';
 
+import Textarea from './components/Textarea';
 import LegislatorSections from './components/LegislatorSections';
 import SpinningIcon from './components/SpinningIcon';
 import Divider from './components/Divider';
@@ -39,25 +40,6 @@ const Jumbotron = styled.header`
 const Emphasis = styled.em`
   color: #8f53ff;
   font-style: normal;
-`;
-
-const Textarea = styled.textarea`
-  width: 100%;
-  border-radius: 8px;
-  padding: 8px;
-  border: 2px solid currentColor;
-  background-color: rgba(255, 255, 255, 0.12);
-  color: #ff9753;
-  transition: background-color 0.2s;
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.22);
-  }
-
-  &:focus {
-    background-color: rgba(0, 0, 0, 0.2);
-    outline: 0;
-  }
 `;
 
 const Footer = styled.footer`

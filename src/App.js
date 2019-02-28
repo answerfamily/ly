@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import SettingsPage from './SettingsPage';
 import SendPage from './SendPage';
 import useLegislatorData from 'lib/useLegislatorData';
@@ -20,6 +20,15 @@ function App() {
   const [selectedLegislatorIds, setLegislatorIds] = useState([]); // list of selected legislator ID, with done legislators always in front.
   const [doneLegislatorMap, setLegislatorDone] = useState({}); // {[done legislator ID]: true, ...}
 
+  const selectedLegislators = useMemo(
+    () => selectedLegislatorIds.map(id => legislatorMap[id]),
+    [selectedLegislatorIds, legislatorMap]
+  );
+  const currentIdx = useMemo(
+    () => selectedLegislatorIds.findIndex(id => !doneLegislatorMap[id]),
+    [selectedLegislatorIds, doneLegislatorMap]
+  );
+
   const handleSelectionChange = useCallback(
     selectedLegislatorIds => {
       setLegislatorIds(
@@ -39,6 +48,18 @@ function App() {
   );
 
   const handleSettingsSubmit = useCallback(() => setPage('send'), [setPage]);
+  const handleBackToSettings = useCallback(() => setPage('settings'), [
+    setPage,
+  ]);
+
+  const handleNext = useCallback(
+    () =>
+      setLegislatorDone({
+        ...doneLegislatorMap,
+        [selectedLegislators[currentIdx].id]: true,
+      }),
+    [doneLegislatorMap, selectedLegislators, currentIdx]
+  );
 
   switch (page) {
     case 'settings':
@@ -55,26 +76,14 @@ function App() {
       );
 
     case 'send': {
-      const selectedLegislators = selectedLegislatorIds.map(
-        id => legislatorMap[id]
-      );
-      const currentIdx = selectedLegislatorIds.findIndex(
-        id => !doneLegislatorMap[id]
-      );
-
       return (
         <SendPage
           msg={msg}
           currentIdx={currentIdx}
           selectedLegislators={selectedLegislators}
           onMsgChange={setMsg}
-          onNext={() =>
-            setLegislatorDone({
-              ...doneLegislatorMap,
-              [selectedLegislators[currentIdx].id]: true,
-            })
-          }
-          onBack={() => setPage('settings')}
+          onNext={handleNext}
+          onBack={handleBackToSettings}
         />
       );
     }
