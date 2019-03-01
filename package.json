@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/core": "^10.0.7",
     "@emotion/styled": "^10.0.7",
+    "clipboard": "^2.0.4",
     "cogo-toast": "^1.0.4",
     "intersection-observer": "^0.5.1",
     "normalize.css": "^8.0.1",

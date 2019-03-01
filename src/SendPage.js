@@ -1,7 +1,8 @@
-import React, { useRef, useCallback, useState } from 'react';
+import React, { useRef, useCallback, useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import cogoToast from 'cogo-toast';
+import ClipboardJS from 'clipboard';
 
 import Textarea from 'components/Textarea';
 import Divider from 'components/Divider';
@@ -203,7 +204,7 @@ function SendPage({
   onNext = () => {},
   onBack = () => {},
 }) {
-  const textareaRef = useRef(null);
+  const copyBtnRef = useRef(null);
   const submitStepRef = useRef(null);
 
   // Set after plugin is parsed.
@@ -215,26 +216,30 @@ function SendPage({
   //
   const [pluginHeight, setPluginHeight] = useState(null);
 
-  const handleCopy = useCallback(() => {
-    textareaRef.current.select();
-    document.execCommand('copy');
-    textareaRef.current.blur();
-    cogoToast.success(`「${msg.slice(0, 10)}⋯⋯」已複製到剪貼簿`, {
-      position: 'bottom-center',
-    });
-    submitStepRef.current.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    });
-  }, [textareaRef, submitStepRef]);
-
   const handleNext = useCallback(() => {
     submitStepRef.current.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
     });
     onNext();
-  }, [submitStepRef, onNext, handleCopy]);
+  }, [submitStepRef, onNext]);
+
+  useEffect(() => {
+    // Copy button clipboard.js setup
+    const clipboard = new ClipboardJS(copyBtnRef.current, { text: () => msg });
+    clipboard.on('success', () => {
+      cogoToast.success(`「${msg.slice(0, 10)}⋯⋯」已複製到剪貼簿`, {
+        position: 'bottom-center',
+      });
+      submitStepRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    });
+    return () => {
+      clipboard.destroy();
+    };
+  }, [copyBtnRef, submitStepRef, msg]);
 
   if (currentIdx === -1) {
     // Show finish screen
@@ -343,14 +348,13 @@ function SendPage({
         <section>
           <h1>1. 複製文字</h1>
           <FlexTextarea
-            ref={textareaRef}
             placeholder="把陳情文字貼在這裡，方便複製貼上"
             onChange={e => onMsgChange(e.target.value)}
             value={msg}
             rows={5}
           />
           <p>
-            <BorderedButton onClick={handleCopy}>複製</BorderedButton>
+            <BorderedButton ref={copyBtnRef}>複製</BorderedButton>
           </p>
         </section>
         <section ref={submitStepRef}>
