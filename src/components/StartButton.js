@@ -42,6 +42,11 @@ function StartButton({
       className={`${className} ${
         show && legislatorToSendCount > 0 ? 'show' : ''
       }`}
+      ga-on="click"
+      ga-event-category="send"
+      ga-event-action="start"
+      ga-event-label={hasStarted ? '繼續' : '開始'}
+      ga-event-value={legislatorToSendCount}
     >
       <span>
         {hasStarted ? '繼續' : '開始'}向 {legislatorToSendCount} 位委員陳情{' '}

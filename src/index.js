@@ -1,9 +1,15 @@
+import 'autotrack/lib/plugins/event-tracker';
+import 'autotrack/lib/plugins/outbound-link-tracker';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'normalize.css';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+
+window.ga('require', 'eventTracker');
+window.ga('require', 'outboundLinkTracker');
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

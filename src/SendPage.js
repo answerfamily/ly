@@ -107,7 +107,11 @@ const BorderedButton = styled(Button)`
   }
 `;
 
-const NextButton = styled(Button)`
+const NextButton = styled(Button, {
+  shouldForwardProp() {
+    return true;
+  },
+})`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -397,7 +401,15 @@ function SendPage({
             <span>↑↑</span>
           </Hint>
           <p>
-            <NextButton onClick={handleNext}>下一位</NextButton>
+            <NextButton
+              ga-on="click"
+              ga-event-category="send"
+              ga-event-action="submit"
+              ga-event-label={name}
+              onClick={handleNext}
+            >
+              下一位
+            </NextButton>
           </p>
         </section>
       </Container>
