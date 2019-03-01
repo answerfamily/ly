@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useState } from 'react';
 import styled from '@emotion/styled';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import cogoToast from 'cogo-toast';
@@ -206,6 +206,15 @@ function SendPage({
   const textareaRef = useRef(null);
   const submitStepRef = useRef(null);
 
+  // Set after plugin is parsed.
+  // This fixes the height of plugin on mobile so that window height change caused by browser footer
+  // or keyboard would not affect the component height after it's loaded.
+  //
+  // In the mean time, it does not affect desktop because desktop's height is determined
+  // by row flexbox.
+  //
+  const [pluginHeight, setPluginHeight] = useState(null);
+
   const handleCopy = useCallback(() => {
     textareaRef.current.select();
     document.execCommand('copy');
@@ -346,7 +355,16 @@ function SendPage({
         </section>
         <section ref={submitStepRef}>
           <h1>2. 貼上並送出</h1>
-          <PluginWrapper>
+          <PluginWrapper
+            style={
+              pluginHeight
+                ? {
+                    height: pluginHeight,
+                    flexBasis: 'auto',
+                  } /* fix height of PluginWrapper */
+                : {}
+            }
+          >
             <AutoSizer>
               {({ width, height }) => [
                 <FacebookPagePlugin
@@ -354,6 +372,9 @@ function SendPage({
                   href={facebookpage}
                   width={width - 4 /* left/right border width */}
                   height={height - 2 /* top border width */}
+                  onParsed={({ height }) =>
+                    setPluginHeight(height + 2 /* top border width */)
+                  }
                 />,
                 selectedLegislators[currentIdx + 1] && (
                   <FacebookPagePlugin

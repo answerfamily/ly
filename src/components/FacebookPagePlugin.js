@@ -10,14 +10,19 @@ function FacebookPagePlugin({
   href = '',
   width = 320,
   height = 500,
+  onParsed = null, // callback on layout being parsed
 }) {
   const fbRoot = useRef(null);
 
   useLayoutEffect(() => {
     waitForFB.then(() => {
-      window.FB.XFBML.parse(fbRoot.current);
+      window.FB.XFBML.parse(fbRoot.current, () => {
+        if (onParsed) {
+          onParsed({ width, height });
+        }
+      });
     });
-  }, [tabs, href, width]); // Mobile keyboard will trigger height change, don't re-parse by it
+  }, [tabs, href, width, height]);
 
   return (
     <div ref={fbRoot} className={className}>
