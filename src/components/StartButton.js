@@ -3,6 +3,12 @@ import styled from '@emotion/styled';
 
 const SECONDS_EACH_LEGISLATOR = 20;
 
+const BreakOnSmallScreen = styled.br`
+  @media screen and (min-width: 425px) {
+    display: none;
+  }
+`;
+
 /**
  * Start sending button on settings page
  *
@@ -39,6 +45,7 @@ function StartButton({
     >
       <span>
         {hasStarted ? '繼續' : '開始'}向 {legislatorToSendCount} 位委員陳情{' '}
+        <BreakOnSmallScreen />
         <small> (約需 {timeStr}) </small>
       </span>
     </button>
