@@ -342,6 +342,14 @@ function SendPage({
               >
                 PrideWatch Taiwan 同志人權立場觀測站
               </a>
+              、
+              <a
+                href="http://equallove.tw/articles/200"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                婚姻平權大平台委員 FB 名冊
+              </a>
             </p>
           </Footer>
         </section>
