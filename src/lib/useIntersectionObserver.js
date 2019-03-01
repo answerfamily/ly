@@ -12,6 +12,11 @@ function useIntersectionObserver(elem = null, onView = () => {}) {
       io.current = new IntersectionObserver(onView, {});
       io.current.observe(elem);
     }
+    return () => {
+      if (io.current) {
+        io.current.disconnect();
+      }
+    };
   }, [elem, onView]);
 }
 
