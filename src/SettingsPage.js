@@ -1,7 +1,7 @@
 import React, { useRef, useCallback, useState } from 'react';
 import styled from '@emotion/styled';
 
-import Textarea from './components/Textarea';
+import MessageInput from './components/MessageInput';
 import LegislatorSections from './components/LegislatorSections';
 import SpinningIcon from './components/SpinningIcon';
 import Divider from './components/Divider';
@@ -102,7 +102,7 @@ function SettingsPage({
         <Divider />
         <label>
           <h3>你想要跟委員們說什麼呢？</h3>
-          <Textarea
+          <MessageInput
             value={msg}
             onChange={e => onMsgChange(e.target.value)}
             rows={5}

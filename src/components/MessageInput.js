@@ -1,6 +1,7 @@
+import React, { useCallback } from 'react';
 import styled from '@emotion/styled';
 
-const Textarea = styled.textarea`
+const TextArea = styled.textarea`
   width: 100%;
   border-radius: 8px;
   padding: 8px;
@@ -19,4 +20,14 @@ const Textarea = styled.textarea`
   }
 `;
 
-export default Textarea;
+function MessageInput(props) {
+  const { value } = props;
+
+  const handleBlur = useCallback(() => {
+    window.ga('set', 'dimension1', value); // message
+  }, [value]);
+
+  return <TextArea {...props} onBlur={handleBlur} />;
+}
+
+export default MessageInput;

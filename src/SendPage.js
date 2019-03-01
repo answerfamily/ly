@@ -4,7 +4,7 @@ import AutoSizer from 'react-virtualized-auto-sizer';
 import cogoToast from 'cogo-toast';
 import ClipboardJS from 'clipboard';
 
-import Textarea from 'components/Textarea';
+import MessageInput from 'components/MessageInput';
 import Divider from 'components/Divider';
 import FacebookPagePlugin from 'components/FacebookPagePlugin';
 import SpinningIcon from './components/SpinningIcon';
@@ -189,10 +189,6 @@ const Hint = styled.div`
   }
 `;
 
-const FlexTextarea = styled(Textarea)`
-  flex: 1;
-`;
-
 const Footer = styled.footer`
   font-size: 12px;
   opacity: 0.88;
@@ -351,7 +347,8 @@ function SendPage({
         </section>
         <section>
           <h1>1. 複製文字</h1>
-          <FlexTextarea
+          <MessageInput
+            style={{ flex: 1 }}
             placeholder="把陳情文字貼在這裡，方便複製貼上"
             onChange={e => onMsgChange(e.target.value)}
             value={msg}
