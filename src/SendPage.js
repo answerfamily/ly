@@ -5,9 +5,10 @@ import cogoToast from 'cogo-toast';
 import ClipboardJS from 'clipboard';
 
 import MessageInput from 'components/MessageInput';
-import Divider from 'components/Divider';
 import FacebookPagePlugin from 'components/FacebookPagePlugin';
-import SpinningIcon from './components/SpinningIcon';
+import LegislatorDisplay from 'components/LegislatorDisplay';
+import FinishDisplay from 'components/FinishDisplay';
+import { Button, BorderedButton } from 'components/buttons';
 
 const Header = styled.header`
   position: fixed;
@@ -91,22 +92,6 @@ const Container = styled.div`
   }
 `;
 
-const Button = styled.button`
-  width: 100%;
-  font-size: 28px;
-`;
-
-const BorderedButton = styled(Button)`
-  padding: 8px 0;
-  border: 2px solid #ff5368;
-  background: transparent;
-  color: #ff5368;
-
-  &:hover {
-    color: #fff;
-  }
-`;
-
 const NextButton = styled(Button, {
   shouldForwardProp() {
     return true;
@@ -131,25 +116,6 @@ const NextButton = styled(Button, {
   &:hover::after {
     transform: translate(8px, 0) rotate(45deg);
   }
-`;
-
-const LegislatorData = styled.article`
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-
-  /* hiding scrollbar */
-  padding-right: 20px;
-  margin-right: -20px;
-
-  /* gradient appear & disappear */
-  mask-image: linear-gradient(
-    to bottom,
-    transparent,
-    black 6%,
-    black 94%,
-    transparent
-  );
 `;
 
 const PluginWrapper = styled.div`
@@ -187,11 +153,6 @@ const Hint = styled.div`
   span {
     margin: 0 1em 0 auto;
   }
-`;
-
-const Footer = styled.footer`
-  font-size: 12px;
-  opacity: 0.88;
 `;
 
 function SendPage({
@@ -243,27 +204,7 @@ function SendPage({
 
   if (currentIdx === -1) {
     // Show finish screen
-    return (
-      <Container
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexFlow: 'column',
-        }}
-      >
-        <SpinningIcon icons={['🏳️‍🌈', '🙇‍♀️', '🙇‍♂️']} />
-        <p>完成囉！謝謝您 m(_ _)m</p>
-        <p>
-          <BorderedButton
-            style={{ padding: 16, fontSize: 16 }}
-            onClick={onBack}
-          >
-            回首頁
-          </BorderedButton>
-        </p>
-      </Container>
-    );
+    return <FinishDisplay onBack={onBack} />;
   }
 
   // Data not loaded yet
@@ -271,17 +212,7 @@ function SendPage({
     return null;
   }
 
-  const {
-    name,
-    pridewatchpage,
-    position,
-    description,
-    party,
-    area,
-    religion,
-    subarea,
-    facebookpage,
-  } = selectedLegislators[currentIdx];
+  const { name, facebookpage } = selectedLegislators[currentIdx];
 
   return (
     <>
@@ -300,59 +231,7 @@ function SendPage({
         />
       </Header>
       <Container>
-        <section
-          style={{
-            /* hiding scrollbar of LegislatorData */
-            overflowX: 'hidden',
-          }}
-        >
-          <h1>{name}</h1>
-          <LegislatorData>
-            <p>{position}</p>
-            {description && (
-              <ul style={{ padding: 0 }}>
-                {description.split('\n').map((desc, idx) => (
-                  <li key={idx}>{desc}</li>
-                ))}
-              </ul>
-            )}
-            <p>
-              {party}・{area}
-              {subarea ? `／${subarea}` : null}
-            </p>
-            {religion ? <p>{religion}</p> : null}
-            <p>
-              <a
-                href={pridewatchpage}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                PrideWatch 頁面
-              </a>
-            </p>
-          </LegislatorData>
-          <Footer>
-            <Divider />
-            <p>
-              資料來源：
-              <a
-                href="https://www.pridewatch.tw/beta/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                PrideWatch Taiwan 同志人權立場觀測站
-              </a>
-              、
-              <a
-                href="http://equallove.tw/articles/200"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                婚姻平權大平台委員 FB 名冊
-              </a>
-            </p>
-          </Footer>
-        </section>
+        <LegislatorDisplay legislator={selectedLegislators[currentIdx]} />
         <section>
           <h1>1. 複製文字</h1>
           <MessageInput
