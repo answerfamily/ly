@@ -212,7 +212,13 @@ function SendPage({
     return null;
   }
 
-  const { name, facebookpage } = selectedLegislators[currentIdx];
+  const {
+    name,
+    facebookpage,
+    facebookprofile,
+    feedonly,
+    cannotload,
+  } = selectedLegislators[currentIdx];
 
   return (
     <>
@@ -261,7 +267,8 @@ function SendPage({
               {({ width, height }) => [
                 <FacebookPagePlugin
                   key={currentIdx}
-                  href={facebookpage}
+                  href={cannotload ? null : facebookpage}
+                  profile={facebookprofile}
                   width={width - 4 /* left/right border width */}
                   height={height - 2 /* top border width */}
                   onParsed={({ height }) =>
@@ -272,7 +279,14 @@ function SendPage({
                   <FacebookPagePlugin
                     className="preload-iframe"
                     key={currentIdx + 1}
-                    href={selectedLegislators[currentIdx + 1].facebookpage}
+                    href={
+                      selectedLegislators[currentIdx + 1]
+                        ? null
+                        : selectedLegislators[currentIdx + 1].facebookpage
+                    }
+                    profile={
+                      selectedLegislators[currentIdx + 1].facebookprofile
+                    }
                     width={width - 4 /* left/right border width */}
                     height={height - 2 /* top border width */}
                   />
@@ -281,8 +295,13 @@ function SendPage({
             </AutoSizer>
           </PluginWrapper>
           <Hint>
-            ＊ 記得要按「發送」才會送出唷！
-            <span>↑↑</span>
+            {feedonly ? (
+              '＊ 委員粉專不開放私訊，請選一篇貼文回應'
+            ) : (
+              <>
+                ＊ 記得要按「發送」才會送出唷！<span>↑↑</span>
+              </>
+            )}
           </Hint>
           <p>
             <NextButton

@@ -1,8 +1,17 @@
 import React, { useLayoutEffect, useRef } from 'react';
+import styled from '@emotion/styled';
 
 import waitForFB from 'lib/waitForFB';
 
 const DEFAULT_TABS = ['messages', 'timeline'];
+
+const Cover = styled.div`
+  background: #ff9753;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  text-align: center;
+`;
 
 function FacebookPagePlugin({
   className = '',
@@ -11,6 +20,7 @@ function FacebookPagePlugin({
   width = 320,
   height = 500,
   onParsed = null, // callback on layout being parsed
+  profile = '',
 }) {
   const fbRoot = useRef(null);
 
@@ -23,6 +33,22 @@ function FacebookPagePlugin({
       });
     });
   }, [tabs, href, width, height]);
+
+  if (!href) {
+    return (
+      <Cover className={className} style={{ width, height }}>
+        <p>無法顯示這位委員的粉絲專頁。</p>
+
+        <p>
+          請至
+          <a href={profile} target="_blank" rel="noopener noreferrer">
+            委員的個人檔案
+          </a>
+          頁面留言。
+        </p>
+      </Cover>
+    );
+  }
 
   return (
     <div ref={fbRoot} className={className}>
