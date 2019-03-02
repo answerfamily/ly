@@ -9,7 +9,7 @@ const Container = styled.div`
 
   label {
     min-width: 105px;
-    padding-right: 1em;
+    padding-right: 2em;
   }
 
   input {
@@ -118,6 +118,8 @@ function PositionSelector({ legislators, selectedIdMap, onChange = () => {} }) {
     [legislators, selectedIdMap]
   );
 
+  const selectedCount = Object.keys(selectedIdMap).length;
+
   const handleToggle = useCallback(
     e => {
       const toggledPosition = e.target.value;
@@ -147,8 +149,28 @@ function PositionSelector({ legislators, selectedIdMap, onChange = () => {} }) {
     [positionCountMap, legislators, onChange, selectedIdMap]
   );
 
+  const handleAllToggle = useCallback(() => {
+    if (selectedCount === 0) {
+      onChange(legislators.map(({ id }) => id));
+    } else {
+      onChange([]);
+    }
+  }, [selectedCount, legislators]);
+
   return (
     <PositionCheckboxList>
+      <li>
+        <label style={{ fontWeight: 'bold', color: '#FF5368' }}>
+          <Checkbox
+            onChange={handleAllToggle}
+            checked={selectedCount === legislators.length}
+            isIndeterminate={
+              0 < selectedCount && selectedCount < legislators.length
+            }
+          />
+          全選
+        </label>
+      </li>
       {Object.keys(positionTotalMap).map(p => (
         <li key={p}>
           <label>
@@ -189,8 +211,13 @@ function LegislatorSection({
   const handleSectionToggle = useCallback(
     e => {
       if (selectedCount === 0) {
-        // Select all
-        onChange(legislators.map(({ id }) => id));
+        // Select all in section
+        const newMap = { ...selectedIdMap };
+        legislators.forEach(({ id }) => {
+          newMap[id] = true;
+        });
+
+        onChange(Object.keys(newMap));
       } else {
         const legislatorMap = legislators.reduce((agg, { id }) => {
           agg[id] = true;
@@ -200,7 +227,7 @@ function LegislatorSection({
         onChange(Object.keys(selectedIdMap).filter(id => !legislatorMap[id]));
       }
     },
-    [legislators, onChange, selectedCount]
+    [legislators, onChange, selectedCount, selectedIdMap]
   );
 
   const handleSingleToggle = useCallback(
