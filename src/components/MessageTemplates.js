@@ -21,7 +21,7 @@ function MessageTemplates({ onSelect = () => {}, ...props }) {
     import('data/messageTemplates.json').then(data =>
       setTemplates((messageTemplateData = data.default.rows))
     );
-  });
+  }, [templates]);
 
   if (!templates) return null;
 
