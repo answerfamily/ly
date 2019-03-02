@@ -45,12 +45,12 @@ export default styled(MessageTemplates)`
 
   li {
     display: inline-block;
-    padding: 4px 8px;
+    padding: 4px 6px;
+    margin: 0 0 4px 4px;
     font-size: 12px;
     border-radius: 30px;
     border: 1px solid currentColor;
     color: #ff5368;
-    margin-left: 8px;
     transition-property: color, background-color;
     transition-duration: 0.2s;
 
