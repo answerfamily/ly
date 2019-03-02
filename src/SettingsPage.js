@@ -121,8 +121,21 @@ function SettingsPage({
             autoFocus
           />
         </label>
-        <p style={{ textAlign: 'right', margin: 0 }}>
-          <button type="button" onClick={handleNextClick}>
+        <p
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            margin: 0,
+          }}
+        >
+          <span style={{ fontSize: 12, opacity: 0.5 }}>
+            ＊ 加入你的經歷與觀察（例：有同事是同志）會更有說服力唷！
+          </span>
+          <button
+            style={{ flexShrink: 0, marginLeft: '8px' }}
+            type="button"
+            onClick={handleNextClick}
+          >
             下一步
           </button>
         </p>
