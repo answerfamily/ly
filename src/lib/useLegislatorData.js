@@ -19,7 +19,7 @@ function useLegislatorData() {
         ))
       )
     );
-  });
+  }, [legislators]);
 
   return [
     legislators,
