@@ -43,6 +43,16 @@ const Emphasis = styled.em`
   font-style: normal;
 `;
 
+const Header = React.memo(() => (
+  <Jumbotron>
+    <SpinningIcon icons={['🏠', '👨‍👨‍👧‍👦', '🏠', '👩‍👩‍👧‍👦', '🏠', '👨‍👩‍👧‍👦']} />
+    <h1>
+      我<Emphasis>愛家</Emphasis>・我聯絡
+    </h1>
+    <h2>平權立院鍵盤陳情</h2>
+  </Jumbotron>
+));
+
 const Footer = styled.footer`
   font-size: 12px;
   color: rgba(255, 255, 255, 0.5);
@@ -55,7 +65,7 @@ function SettingsPage({
   onMsgChange = () => {},
   legislators = [],
   selectedLegislatorIds = [],
-  doneLegislatorsMap = {},
+  doneLegislatorMap = {},
   onSelectionChange = () => {},
   onSubmit = () => {},
 }) {
@@ -93,14 +103,7 @@ function SettingsPage({
 
   return (
     <PageContainer>
-      <Jumbotron>
-        <SpinningIcon icons={['🏠', '👨‍👨‍👧‍👦', '🏠', '👩‍👩‍👧‍👦', '🏠', '👨‍👩‍👧‍👦']} />
-        <h1>
-          我<Emphasis>愛家</Emphasis>・我聯絡
-        </h1>
-        <h2>平權立院鍵盤陳情</h2>
-      </Jumbotron>
-
+      <Header />
       <section>
         <p>
           讓同志能以<Emphasis>婚姻</Emphasis>成家，就是「愛家」的表現。
@@ -131,13 +134,13 @@ function SettingsPage({
         <LegislatorSections
           legislators={legislators || []}
           selectedLegislatorIds={selectedLegislatorIds}
-          doneLegislatorsMap={doneLegislatorsMap}
+          doneLegislatorMap={doneLegislatorMap}
           onSelectionChange={onSelectionChange}
         />
         <StartButton
           show={isSelectionInView}
           selectedLegislatorIds={selectedLegislatorIds}
-          doneLegislatorsMap={doneLegislatorsMap}
+          doneLegislatorMap={doneLegislatorMap}
           onClick={onSubmit}
         />
       </section>
@@ -151,6 +154,25 @@ function SettingsPage({
           </a>
           參與者提供之
           <a href="https://github.com/answerfamily/ly">開放原始碼</a>專案。
+        </p>
+
+        <p>
+          資料來源：
+          <a
+            href="https://www.pridewatch.tw/beta/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            PrideWatch Taiwan 同志人權立場觀測站
+          </a>
+          、
+          <a
+            href="http://equallove.tw/articles/200"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            婚姻平權大平台委員 FB 名冊
+          </a>
         </p>
 
         <p>

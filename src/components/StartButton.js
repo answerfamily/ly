@@ -13,20 +13,20 @@ const BreakOnSmallScreen = styled.br`
  * Start sending button on settings page
  *
  * @param {String[]} props.selectedLegislatorIds
- * @param {Object} props.doneLegislatorsMap - id to true map
+ * @param {Object} props.doneLegislatorMap - id to true map
  * @param {function} props.onClick
  * @param {boolean} props.show - whether to show this button
  */
 function StartButton({
-  doneLegislatorsMap,
+  doneLegislatorMap,
   selectedLegislatorIds,
   onClick,
   show = false,
   className,
 }) {
-  const hasStarted = Object.keys(doneLegislatorsMap).length > 0;
+  const hasStarted = Object.keys(doneLegislatorMap).length > 0;
   const legislatorToSendCount = selectedLegislatorIds.filter(
-    id => !doneLegislatorsMap[id]
+    id => !doneLegislatorMap[id]
   ).length;
 
   const totalSeconds = SECONDS_EACH_LEGISLATOR * legislatorToSendCount;

@@ -44,13 +44,13 @@ const Section = styled.section`
  *
  * @param {Object[]} props.legislator
  * @param {String[]} props.selectedLegislatorIds
- * @param {Object} props.doneLegislatorsMap - id to true map
+ * @param {Object} props.doneLegislatorMap - id to true map
  * @param {function} props.onSelectionChange
  */
 function LegislatorSections({
   legislators = [],
   selectedLegislatorIds = [],
-  doneLegislatorsMap = {},
+  doneLegislatorMap = {},
   onSelectionChange = () => {},
 }) {
   const legislatorsByArea = useMemo(
@@ -278,4 +278,4 @@ function LegislatorSection({
   );
 }
 
-export default LegislatorSections;
+export default React.memo(LegislatorSections);
