@@ -102,6 +102,7 @@ function SettingsPage({
         <Divider />
         <label>
           <h3>你想要跟委員們說什麼呢？</h3>
+
           <MessageInput
             value={msg}
             onChange={e => onMsgChange(e.target.value)}
@@ -109,22 +110,16 @@ function SettingsPage({
             autoFocus
           />
         </label>
-        <button type="button" onClick={handleNextClick}>
-          下一步
-        </button>
+        <p style={{ textAlign: 'right', margin: 0 }}>
+          <button type="button" onClick={handleNextClick}>
+            下一步
+          </button>
+        </p>
       </section>
 
       <section ref={selectionSectionRef}>
         <Divider />
         <h3>請選擇要陳情的立委</h3>
-        <p>
-          <button
-            type="button"
-            onClick={() => onSelectionChange(legislators.map(({ id }) => id))}
-          >
-            我全部都要！
-          </button>
-        </p>
         <LegislatorSections
           legislators={legislators || []}
           selectedLegislatorIds={selectedLegislatorIds}
