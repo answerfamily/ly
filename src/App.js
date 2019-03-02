@@ -40,7 +40,11 @@ function App() {
           // Then compare their positions
           const aPos = POSITION_ORDER[legislatorMap[aId].position];
           const bPos = POSITION_ORDER[legislatorMap[bId].position];
-          return aPos - bPos;
+          if (aPos - bPos !== 0) {
+            return aPos - bPos;
+          }
+
+          return aId - bId;
         })
       );
     },
