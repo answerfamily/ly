@@ -8,6 +8,7 @@ import Divider from './components/Divider';
 
 import useIntersectionObserver from './lib/useIntersectionObserver';
 import StartButton from './components/StartButton';
+import MessageTemplates from './components/MessageTemplates';
 
 const PageContainer = styled.div`
   padding: 40px;
@@ -78,6 +79,13 @@ function SettingsPage({
     }
   });
 
+  const handleMessageAdd = useCallback(
+    selectedMsg => {
+      onMsgChange(`${msg}\n\n${selectedMsg}`);
+    },
+    [msg, onMsgChange]
+  );
+
   useIntersectionObserver(
     selectionSectionRef.current,
     handleSelectionIntersect
@@ -102,7 +110,7 @@ function SettingsPage({
         <Divider />
         <label>
           <h3>你想要跟委員們說什麼呢？</h3>
-
+          <MessageTemplates onSelect={handleMessageAdd} />
           <MessageInput
             value={msg}
             onChange={e => onMsgChange(e.target.value)}

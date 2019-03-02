@@ -1,0 +1,9 @@
+{
+  "rows": [
+    {"label": "LABEL", "msg": "MSGGG"},
+    {
+      "label": "LABEL2",
+      "msg": "MSGGG2"
+    }
+  ]
+}
