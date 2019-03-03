@@ -5,11 +5,11 @@ import Checkbox from './Checkbox';
 const Container = styled.div`
   li {
     display: inline-block;
+    padding-right: 2em;
   }
 
   label {
     min-width: 105px;
-    padding-right: 2em;
   }
 
   input {
@@ -120,7 +120,7 @@ function PositionSelector({ legislators, selectedIdMap, onChange = () => {} }) {
 
   const selectedCount = Object.keys(selectedIdMap).length;
 
-  const handleToggle = useCallback(
+  const handlePositionToggle = useCallback(
     e => {
       const toggledPosition = e.target.value;
 
@@ -157,6 +157,38 @@ function PositionSelector({ legislators, selectedIdMap, onChange = () => {} }) {
     }
   }, [selectedCount, legislators]);
 
+  const targetedSelectedCount = useMemo(
+    () =>
+      legislators.filter(({ id, targeted }) => targeted && selectedIdMap[id])
+        .length,
+    [legislators, selectedIdMap]
+  );
+  const targetedSelectedTotal = useMemo(
+    () => legislators.filter(({ targeted }) => targeted).length,
+    [legislators]
+  );
+
+  const handleTargetedToggle = useCallback(
+    e => {
+      if (targetedSelectedCount === 0) {
+        // select all in platform
+        onChange(
+          legislators
+            .filter(({ targeted, id }) => targeted || selectedIdMap[id])
+            .map(({ id }) => id)
+        );
+      } else {
+        // deselect all
+        onChange(
+          legislators
+            .filter(({ targeted, id }) => !targeted && selectedIdMap[id])
+            .map(({ id }) => id)
+        );
+      }
+    },
+    [legislators, onChange, selectedIdMap]
+  );
+
   return (
     <PositionCheckboxList>
       <li>
@@ -176,7 +208,7 @@ function PositionSelector({ legislators, selectedIdMap, onChange = () => {} }) {
           <label>
             <Checkbox
               value={p}
-              onChange={handleToggle}
+              onChange={handlePositionToggle}
               checked={positionCountMap[p] === positionTotalMap[p]}
               isIndeterminate={
                 0 < positionCountMap[p] &&
@@ -187,6 +219,26 @@ function PositionSelector({ legislators, selectedIdMap, onChange = () => {} }) {
           </label>
         </li>
       ))}
+      <li>
+        <label style={{ fontWeight: 'bold', color: '#FF5368' }}>
+          <Checkbox
+            onChange={handleTargetedToggle}
+            checked={targetedSelectedCount === targetedSelectedTotal}
+            isIndeterminate={
+              0 < targetedSelectedCount &&
+              targetedSelectedCount < targetedSelectedTotal
+            }
+          />
+          遭到反同鎖定的
+        </label>
+        <a
+          href="https://www.mirrormedia.mg/story/20190302inv001"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          立委們
+        </a>
+      </li>
     </PositionCheckboxList>
   );
 }
