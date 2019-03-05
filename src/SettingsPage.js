@@ -172,19 +172,19 @@ function SettingsPage({
         <p>
           資料來源：
           <a
-            href="https://www.pridewatch.tw/beta/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            PrideWatch Taiwan 同志人權立場觀測站
-          </a>
-          、
-          <a
             href="http://equallove.tw/articles/200"
             target="_blank"
             rel="noopener noreferrer"
           >
             婚姻平權大平台委員 FB 名冊
+          </a>
+          、
+          <a
+            href="https://www.pridewatch.tw/beta/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            PrideWatch Taiwan 同志人權立場觀測站
           </a>
         </p>
 
