@@ -4,6 +4,8 @@ import AutoSizer from 'react-virtualized-auto-sizer';
 import cogoToast from 'cogo-toast';
 import ClipboardJS from 'clipboard';
 
+import useLegislatorContactData from 'lib/useLegislatorContactData';
+
 import MessageInput from 'components/MessageInput';
 import FacebookPagePlugin from 'components/FacebookPagePlugin';
 import LegislatorDisplay from 'components/LegislatorDisplay';
@@ -167,6 +169,9 @@ function SendPage({
 }) {
   const copyBtnRef = useRef(null);
   const submitStepRef = useRef(null);
+  const getContactByName = useLegislatorContactData();
+
+  console.log(getContactByName);
 
   // Set after plugin is parsed.
   // This fixes the height of plugin on mobile so that window height change caused by browser footer
