@@ -111,6 +111,10 @@ function SettingsPage({
           <Emphasis>希望讓同志可以結婚</Emphasis>的心聲吧！
         </p>
         <Divider />
+        <h3>你想要怎麼陳情？</h3>
+
+
+
         <label>
           <h3>你想要跟委員們說什麼呢？</h3>
           <MessageTemplates onSelect={handleMessageAdd} />
