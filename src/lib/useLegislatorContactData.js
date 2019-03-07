@@ -3,6 +3,10 @@ import { useState, useEffect } from 'react';
 // shared storage of legislators
 let storedContactMapGetter = null;
 
+function getNameHash(name) {
+  return name.slice(0, 3).replace(/[．‧]/g, '');
+}
+
 /**
  * @returns {[object[], object]} legislator name to contact map
  */
@@ -16,7 +20,7 @@ function useLegislatorContactData() {
 
     import('data/ly-tel.json').then(data => {
       const map = (data.default || []).reduce((agg, { name, contacts }) => {
-        agg[name.slice(0, 3)] = contacts;
+        agg[getNameHash(name)] = contacts;
         return agg;
       }, {});
 
@@ -26,7 +30,7 @@ function useLegislatorContactData() {
         //
         () =>
           (storedContactMapGetter = function getContact(name = '') {
-            return map[name.slice(0, 3)];
+            return map[getNameHash(name)];
           })
       );
     });

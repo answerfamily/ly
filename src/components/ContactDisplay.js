@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-function ContactDisplay({ contacts, ...props }) {
+function ContactDisplay({ contacts = [], ...props }) {
   return (
     <ul {...props}>
       {contacts.map(({ name, phone, address }, idx) => (
