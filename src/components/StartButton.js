@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-const SECONDS_EACH_LEGISLATOR = 20;
+const SECONDS_EACH_LEGISLATOR_FB = 20;
+const SECONDS_EACH_LEGISLATOR_TEL = 300;
 
 const BreakOnSmallScreen = styled.br`
   @media screen and (min-width: 425px) {
@@ -23,13 +24,18 @@ function StartButton({
   onClick,
   show = false,
   className,
+  sendType = '',
 }) {
   const hasStarted = Object.keys(doneLegislatorMap).length > 0;
   const legislatorToSendCount = selectedLegislatorIds.filter(
     id => !doneLegislatorMap[id]
   ).length;
+  const secondsEachLegislator =
+    sendType === 'fb'
+      ? SECONDS_EACH_LEGISLATOR_FB
+      : SECONDS_EACH_LEGISLATOR_TEL;
 
-  const totalSeconds = SECONDS_EACH_LEGISLATOR * legislatorToSendCount;
+  const totalSeconds = secondsEachLegislator * legislatorToSendCount;
   const timeStr =
     totalSeconds > 120
       ? ` ${Math.floor(totalSeconds / 60)} 分鐘`

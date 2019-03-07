@@ -161,6 +161,7 @@ function SettingsPage({
           selectedLegislatorIds={selectedLegislatorIds}
           doneLegislatorMap={doneLegislatorMap}
           onClick={onSubmit}
+          sendType={sendType}
         />
       </section>
       <Footer>
