@@ -83,13 +83,13 @@ export default styled(SendTypeSwitch)`
     }
   }
 
-  li:first-child {
+  li:first-of-type {
     border-left-width: 2px;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
   }
 
-  li:last-child {
+  li:last-of-type {
     border-right-width: 2px;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
