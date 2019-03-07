@@ -1,8 +1,6 @@
-import React, { useRef, useCallback, useState, useEffect } from 'react';
+import React, { useRef, useCallback, useState } from 'react';
 import styled from '@emotion/styled';
 import AutoSizer from 'react-virtualized-auto-sizer';
-import cogoToast from 'cogo-toast';
-import ClipboardJS from 'clipboard';
 
 import useLegislatorContactData from 'lib/useLegislatorContactData';
 
@@ -10,7 +8,8 @@ import MessageInput from 'components/MessageInput';
 import FacebookPagePlugin from 'components/FacebookPagePlugin';
 import LegislatorDisplay from 'components/LegislatorDisplay';
 import FinishDisplay from 'components/FinishDisplay';
-import { Button, BorderedButton } from 'components/buttons';
+import { Button } from 'components/buttons';
+import CopyButton from './components/CopyButton';
 
 const Header = styled.header`
   position: fixed;
@@ -161,13 +160,13 @@ function SendPage({
   msg = '',
   currentIdx = 0 /* -1 when done */,
   selectedLegislators = [],
+  sendType = '',
 
   onMsgChange = () => {},
   onPrev = () => {},
   onNext = () => {},
   onBack = () => {},
 }) {
-  const copyBtnRef = useRef(null);
   const submitStepRef = useRef(null);
   const getContactByName = useLegislatorContactData();
 
@@ -190,22 +189,12 @@ function SendPage({
     onNext();
   }, [submitStepRef, onNext]);
 
-  useEffect(() => {
-    // Copy button clipboard.js setup
-    const clipboard = new ClipboardJS(copyBtnRef.current, { text: () => msg });
-    clipboard.on('success', () => {
-      cogoToast.success(`「${msg.slice(0, 10)}⋯⋯」已複製到剪貼簿`, {
-        position: 'bottom-center',
-      });
-      submitStepRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      });
+  const handleCopy = useCallback(() => {
+    submitStepRef.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
     });
-    return () => {
-      clipboard.destroy();
-    };
-  }, [copyBtnRef, submitStepRef, msg]);
+  }, [submitStepRef]);
 
   if (currentIdx === -1) {
     // Show finish screen
@@ -244,7 +233,7 @@ function SendPage({
       <Container>
         <LegislatorDisplay legislator={selectedLegislators[currentIdx]} />
         <section>
-          <h1>1. 複製文字</h1>
+          <h1>{sendType === 'fb' ? '1. 複製文字' : '1. 備好講稿'}</h1>
           <MessageInput
             style={{ flex: 1 }}
             placeholder="把陳情文字貼在這裡，方便複製貼上"
@@ -252,62 +241,71 @@ function SendPage({
             value={msg}
             rows={5}
           />
-          <p>
-            <BorderedButton ref={copyBtnRef}>複製</BorderedButton>
-          </p>
+          {sendType === 'fb' && (
+            <p>
+              <CopyButton onCopy={handleCopy} text={msg} />
+            </p>
+          )}
         </section>
         <section ref={submitStepRef}>
-          <h1>2. 貼上並送出</h1>
-          <PluginWrapper
-            style={
-              pluginHeight
-                ? {
-                    height: pluginHeight,
-                    flexBasis: 'auto',
-                  } /* fix height of PluginWrapper */
-                : {}
-            }
-          >
-            <AutoSizer>
-              {({ width, height }) => [
-                <FacebookPagePlugin
-                  key={currentIdx}
-                  href={cannotload ? null : facebookpage}
-                  profile={facebookprofile}
-                  width={width - 4 /* left/right border width */}
-                  height={height - 2 /* top border width */}
-                  onParsed={({ height }) =>
-                    setPluginHeight(height + 2 /* top border width */)
-                  }
-                />,
-                selectedLegislators[currentIdx + 1] && (
-                  <FacebookPagePlugin
-                    className="preload-iframe"
-                    key={currentIdx + 1}
-                    href={
-                      selectedLegislators[currentIdx + 1]
-                        ? null
-                        : selectedLegislators[currentIdx + 1].facebookpage
-                    }
-                    profile={
-                      selectedLegislators[currentIdx + 1].facebookprofile
-                    }
-                    width={width - 4 /* left/right border width */}
-                    height={height - 2 /* top border width */}
-                  />
-                ),
-              ]}
-            </AutoSizer>
-          </PluginWrapper>
-          <Hint>
-            {feedonly ? (
-              '＊ 委員粉專不開放私訊，請選一篇貼文回應'
-            ) : (
-              <>
-                ＊ 記得要按「發送」才會送出唷！<span>↑↑</span>
-              </>
-            )}
-          </Hint>
+          <h1>{sendType === 'fb' ? '2. 貼上並送出' : '2. 拿起話筒撥打'}</h1>
+          {sendType === 'fb' ? (
+            <>
+              <PluginWrapper
+                style={
+                  pluginHeight
+                    ? {
+                        height: pluginHeight,
+                        flexBasis: 'auto',
+                      } /* fix height of PluginWrapper */
+                    : {}
+                }
+              >
+                <AutoSizer>
+                  {({ width, height }) => [
+                    <FacebookPagePlugin
+                      key={currentIdx}
+                      href={cannotload ? null : facebookpage}
+                      profile={facebookprofile}
+                      width={width - 4 /* left/right border width */}
+                      height={height - 2 /* top border width */}
+                      onParsed={({ height }) =>
+                        setPluginHeight(height + 2 /* top border width */)
+                      }
+                    />,
+                    selectedLegislators[currentIdx + 1] && (
+                      <FacebookPagePlugin
+                        className="preload-iframe"
+                        key={currentIdx + 1}
+                        href={
+                          selectedLegislators[currentIdx + 1]
+                            ? null
+                            : selectedLegislators[currentIdx + 1].facebookpage
+                        }
+                        profile={
+                          selectedLegislators[currentIdx + 1].facebookprofile
+                        }
+                        width={width - 4 /* left/right border width */}
+                        height={height - 2 /* top border width */}
+                      />
+                    ),
+                  ]}
+                </AutoSizer>
+              </PluginWrapper>
+              <Hint>
+                {feedonly ? (
+                  '＊ 委員粉專不開放私訊，請選一篇貼文回應'
+                ) : (
+                  <>
+                    ＊ 記得要按「發送」才會送出唷！<span>↑↑</span>
+                  </>
+                )}
+              </Hint>
+            </>
+          ) : (
+            <div>123</div>
+          )}
+
           <p>
             <NextButton
               ga-on="click"
