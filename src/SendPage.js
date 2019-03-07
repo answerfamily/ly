@@ -277,7 +277,7 @@ function SendPage({
                         className="preload-iframe"
                         key={currentIdx + 1}
                         href={
-                          selectedLegislators[currentIdx + 1]
+                          selectedLegislators[currentIdx + 1].cannotload
                             ? null
                             : selectedLegislators[currentIdx + 1].facebookpage
                         }
