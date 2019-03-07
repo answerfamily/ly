@@ -86,6 +86,14 @@ function LegislatorDisplay({
           >
             PrideWatch Taiwan 同志人權立場觀測站
           </a>
+          、
+          <a
+            href="https://github.com/g0v/ly-tel"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            g0v 立委聯絡資訊專案
+          </a>
         </p>
       </Footer>
     </section>
