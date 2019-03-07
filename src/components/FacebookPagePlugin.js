@@ -39,13 +39,17 @@ function FacebookPagePlugin({
       <Cover className={className} style={{ width, height }}>
         <p>無法顯示這位委員的粉絲專頁。</p>
 
-        <p>
-          請至
-          <a href={profile} target="_blank" rel="noopener noreferrer">
-            委員的個人檔案
-          </a>
-          頁面留言。
-        </p>
+        {profile ? (
+          <p>
+            請至
+            <a href={profile} target="_blank" rel="noopener noreferrer">
+              委員的個人檔案
+            </a>
+            頁面留言。
+          </p>
+        ) : (
+          <p>請直接下一位。</p>
+        )}
       </Cover>
     );
   }
