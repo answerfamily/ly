@@ -59,6 +59,7 @@ function App() {
     newSendType => {
       if (newSendType === sendType) return;
       setSendType(newSendType);
+      window.ga('set', 'dimension2', newSendType);
 
       if (
         newSendType === 'fb' &&
