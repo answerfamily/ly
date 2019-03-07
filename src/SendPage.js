@@ -7,6 +7,7 @@ import useLegislatorContactData from 'lib/useLegislatorContactData';
 import MessageInput from 'components/MessageInput';
 import FacebookPagePlugin from 'components/FacebookPagePlugin';
 import LegislatorDisplay from 'components/LegislatorDisplay';
+import ContactDisplay from 'components/ContactDisplay';
 import FinishDisplay from 'components/FinishDisplay';
 import { Button } from 'components/buttons';
 import CopyButton from './components/CopyButton';
@@ -170,8 +171,6 @@ function SendPage({
   const submitStepRef = useRef(null);
   const getContactByName = useLegislatorContactData();
 
-  console.log(getContactByName);
-
   // Set after plugin is parsed.
   // This fixes the height of plugin on mobile so that window height change caused by browser footer
   // or keyboard would not affect the component height after it's loaded.
@@ -303,7 +302,9 @@ function SendPage({
               </Hint>
             </>
           ) : (
-            <div>123</div>
+            getContactByName && (
+              <ContactDisplay contacts={getContactByName(name)} />
+            )
           )}
 
           <p>
