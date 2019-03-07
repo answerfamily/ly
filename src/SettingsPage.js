@@ -9,6 +9,7 @@ import Divider from './components/Divider';
 import useIntersectionObserver from './lib/useIntersectionObserver';
 import StartButton from './components/StartButton';
 import MessageTemplates from './components/MessageTemplates';
+import SendTypeSwitch from './components/SendTypeSwitch';
 
 const PageContainer = styled.div`
   padding: 40px;
@@ -67,6 +68,8 @@ function SettingsPage({
   selectedLegislatorIds = [],
   doneLegislatorMap = {},
   onSelectionChange = () => {},
+  sendType = '',
+  onSendTypeChange = () => {},
   onSubmit = () => {},
 }) {
   const selectionSectionRef = useRef(null);
@@ -112,8 +115,7 @@ function SettingsPage({
         </p>
         <Divider />
         <h3>你想要怎麼陳情？</h3>
-
-
+        <SendTypeSwitch value={sendType} onChange={onSendTypeChange} />
 
         <label>
           <h3>你想要跟委員們說什麼呢？</h3>
