@@ -49,13 +49,13 @@ function LegislatorDisplay({
       <h1>{name}</h1>
       <LegislatorData>
         <p>{position}</p>
-        {description && (
+        {description ? (
           <ul style={{ padding: 0 }}>
             {description.split('\n').map((desc, idx) => (
               <li key={idx}>{desc}</li>
             ))}
           </ul>
-        )}
+        ) : null}
         <p>
           {party}・{area}
           {subarea ? `／${subarea}` : null}
