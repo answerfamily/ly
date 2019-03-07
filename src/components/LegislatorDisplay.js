@@ -69,7 +69,7 @@ function LegislatorDisplay({
       </LegislatorData>
       <Footer>
         <Divider />
-        <p>
+        <p style={{ marginBottom: 0 }}>
           資料來源：
           <a
             href="http://equallove.tw/articles/200"

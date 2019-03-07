@@ -241,7 +241,7 @@ function SendPage({
             rows={5}
           />
           {sendType === 'fb' && (
-            <p>
+            <p style={{ marginBottom: 0 }}>
               <CopyButton onCopy={handleCopy} text={msg} />
             </p>
           )}
@@ -307,7 +307,7 @@ function SendPage({
             )
           )}
 
-          <p>
+          <p style={{ marginBottom: 0 }}>
             <NextButton
               ga-on="click"
               ga-event-category="send"
