@@ -173,7 +173,9 @@ function SettingsPage({
             《我愛家我解惑 - 平權社會對話工程》社群
           </a>
           參與者提供之
-          <a href="https://github.com/answerfamily/ly">開放原始碼</a>專案。
+          <a href="https://github.com/answerfamily/ly">開放原始碼</a>
+          專案。若有任何問題或建議，請來信至{' '}
+          <a href="mailto:cofacts@googlegroups.com">Cofacts 聯絡信箱</a>。
         </p>
 
         <p>
