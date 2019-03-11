@@ -240,7 +240,7 @@ function PositionSelector({ legislators, selectedIdMap, onChange = () => {} }) {
           連署
         </label>
         <a
-          href="https://www.facebook.com/tapcpr/posts/10156012902130965"
+          href="https://www.facebook.com/TaiwanHotline/photos/a.323404934262/10156467464324263/"
           target="_blank"
           rel="noopener noreferrer"
         >
