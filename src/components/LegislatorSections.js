@@ -159,12 +159,14 @@ function PositionSelector({ legislators, selectedIdMap, onChange = () => {} }) {
 
   const targetedSelectedCount = useMemo(
     () =>
-      legislators.filter(({ id, targeted }) => targeted && selectedIdMap[id])
-        .length,
+      legislators.filter(
+        ({ id, signedmutualliving }) => signedmutualliving && selectedIdMap[id]
+      ).length,
     [legislators, selectedIdMap]
   );
   const targetedSelectedTotal = useMemo(
-    () => legislators.filter(({ targeted }) => targeted).length,
+    () =>
+      legislators.filter(({ signedmutualliving }) => signedmutualliving).length,
     [legislators]
   );
 
@@ -174,14 +176,20 @@ function PositionSelector({ legislators, selectedIdMap, onChange = () => {} }) {
         // select all in platform
         onChange(
           legislators
-            .filter(({ targeted, id }) => targeted || selectedIdMap[id])
+            .filter(
+              ({ signedmutualliving, id }) =>
+                signedmutualliving || selectedIdMap[id]
+            )
             .map(({ id }) => id)
         );
       } else {
         // deselect all
         onChange(
           legislators
-            .filter(({ targeted, id }) => !targeted && selectedIdMap[id])
+            .filter(
+              ({ signedmutualliving, id }) =>
+                !signedmutualliving && selectedIdMap[id]
+            )
             .map(({ id }) => id)
         );
       }
@@ -229,14 +237,14 @@ function PositionSelector({ legislators, selectedIdMap, onChange = () => {} }) {
               targetedSelectedCount < targetedSelectedTotal
             }
           />
-          遭到反同鎖定的
+          連署
         </label>
         <a
-          href="https://www.mirrormedia.mg/story/20190302inv001"
+          href="https://www.facebook.com/tapcpr/posts/10156012902130965"
           target="_blank"
           rel="noopener noreferrer"
         >
-          立委們
+          反同專法
         </a>
       </li>
     </PositionCheckboxList>
