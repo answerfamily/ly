@@ -3,7 +3,11 @@ import { useRef, useLayoutEffect } from 'react';
 
 function useIntersectionObserver(elem = null, onView = () => {}) {
   const io = useRef(null);
-
+  function disconnect() {
+    if (io.current) {
+      io.current.disconnect();
+    }
+  }
   useLayoutEffect(() => {
     if (io.current) {
       io.current.disconnect();
@@ -12,12 +16,10 @@ function useIntersectionObserver(elem = null, onView = () => {}) {
       io.current = new IntersectionObserver(onView, {});
       io.current.observe(elem);
     }
-    return () => {
-      if (io.current) {
-        io.current.disconnect();
-      }
-    };
+    return disconnect;
   }, [elem, onView]);
+
+  return disconnect;
 }
 
 export default useIntersectionObserver;

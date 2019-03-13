@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import FacebookEmbedPlugin from './components/FacebookEmbedPlugin';
+import LikeTargetList from './components/LikeTargetList';
 import LikeTargetDateSelect from './components/LikeTargetDateSelect';
 
 function sortByDateThenLen(
@@ -13,33 +13,35 @@ function sortByDateThenLen(
   return lenRight - lenLeft;
 }
 
+function convertRowsToLikeTargetsByDate(rows) {
+  return rows
+    .map(({ createdtime, ...row }) => ({
+      date: new Date(createdtime.replace(/T.+$/, '')),
+      ...row,
+    }))
+    .sort(sortByDateThenLen)
+    .reduce((grouped, likeTarget) => {
+      if (grouped.length === 0) return [[likeTarget]];
+
+      const lastGroup = grouped[grouped.length - 1];
+      if (+likeTarget.date === +lastGroup[0].date) {
+        lastGroup.push(likeTarget);
+        return grouped;
+      }
+
+      // Create new group
+      grouped.push([likeTarget]);
+      return grouped;
+    }, []);
+}
+
 function LikePage() {
   const [likeTargetsByDate, setLikeTargetsByDate] = useState(null); // [[target1, target2], [target3, target4], ...]
   const [dateIdx, setDateIdx] = useState(0);
 
   useEffect(() => {
     import('data/fb.json').then(({ default: { rows } }) =>
-      setLikeTargetsByDate(
-        rows
-          .map(({ createdtime, ...row }) => ({
-            date: new Date(createdtime.replace(/T.+$/, '')),
-            ...row,
-          }))
-          .sort(sortByDateThenLen)
-          .reduce((grouped, likeTarget) => {
-            if (grouped.length === 0) return [[likeTarget]];
-
-            const lastGroup = grouped[grouped.length - 1];
-            if (+likeTarget.date === +lastGroup[0].date) {
-              lastGroup.push(likeTarget);
-              return grouped;
-            }
-
-            // Create new group
-            grouped.push([likeTarget]);
-            return grouped;
-          }, [])
-      )
+      setLikeTargetsByDate(convertRowsToLikeTargetsByDate(rows))
     );
   }, []);
 
@@ -62,9 +64,8 @@ function LikePage() {
         onChange={setDateIdx}
       />
 
-      {currentLikeTargets.map(({ id, type }) => (
-        <FacebookEmbedPlugin key={`${type}_${id}`} id={id} type={type} />
-      ))}
+      {/* Reset LikeTargetList state whenever date changes */}
+      <LikeTargetList key={dateIdx} likeTargets={currentLikeTargets} />
 
       <hr />
 
