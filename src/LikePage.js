@@ -19,8 +19,8 @@ function LikePage() {
     import('data/fb.json').then(({ default: { rows } }) =>
       setLikeTargets(
         rows
-          .map(({ created_time, ...row }) => ({
-            date: new Date(created_time.replace(/T.+$/, '')),
+          .map(({ createdtime, ...row }) => ({
+            date: new Date(createdtime.replace(/T.+$/, '')),
             ...row,
           }))
           .sort(sortByDateThenLen)
