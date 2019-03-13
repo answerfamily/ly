@@ -50,8 +50,9 @@ function FacebookEmbedPlugin({
 
 export default React.memo(styled(FacebookEmbedPlugin)`
   margin: 16px 0;
+  /* avoid totally collapse when not loaded */
   min-width: 150px;
-  min-height: 150px;
+  min-height: 120px;
   text-align: center; /* inner div will become inline-block by Facebook JS */
 
   > div {
