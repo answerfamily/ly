@@ -84,13 +84,16 @@ function SettingsPage({
     [selectionSectionRef]
   );
 
-  const handleSelectionIntersect = useCallback(entries => {
-    if (entries[0].isIntersecting) {
-      setSelectionInView(true);
-    } else {
-      setSelectionInView(false);
-    }
-  });
+  const handleSelectionIntersect = useCallback(
+    entries => {
+      if (entries[0].isIntersecting) {
+        setSelectionInView(true);
+      } else {
+        setSelectionInView(false);
+      }
+    },
+    [setSelectionInView]
+  );
 
   const handleMessageAdd = useCallback(
     selectedMsg => {
