@@ -26,6 +26,7 @@
     "data": "npm run data:legislator && npm run data:template && npm run data:tel",
     "data:legislator": "curl 'http://gsx2json.com/api?id=14aWeKOI6M44X0ApC2WF52OVRq13Ujr4MN9T1stPfFSc&sheet=1&columns=false' > ./src/data/legislators.json",
     "data:template": "curl 'http://gsx2json.com/api?id=14aWeKOI6M44X0ApC2WF52OVRq13Ujr4MN9T1stPfFSc&sheet=4&columns=false' > ./src/data/messageTemplates.json",
+    "data:fb": "curl 'http://gsx2json.com/api?id=12MQwrdRyF4c7RBcjURCvEV5DZkPMQ-7_G_RsCwQcPC4&sheet=1&columns=false' > ./src/data/fb.json",
     "data:tel": "curl 'https://raw.githubusercontent.com/g0v/ly-tel/master/web/data/mly-9.json' > ./src/data/ly-tel.json"
   },
   "eslintConfig": {

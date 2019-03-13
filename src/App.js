@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import SettingsPage from './SettingsPage';
 import SendPage from './SendPage';
+import LikePage from './LikePage';
 import useLegislatorData from 'lib/useLegislatorData';
 
 const POSITION_ORDER = {
@@ -16,9 +17,11 @@ const DEFAULT_FB_MESSAGE =
 const DEFAULT_TEL_MESSAGE =
   '您好，我是我是ＸＸ區的選民，我想要陳情。\n\n我希望委員支持用合憲的法律，讓同志可以結婚。';
 
+const DEFAULT_PAGE = window.location.hash === '#/like' ? 'like' : 'settings';
+
 function App() {
   const [legislators, legislatorMap] = useLegislatorData();
-  const [page, setPage] = useState('settings'); // current page. enum: 'settings', 'send'
+  const [page, setPage] = useState(DEFAULT_PAGE); // current page. enum: 'settings', 'send'
   const [msg, setMsg] = useState(DEFAULT_FB_MESSAGE); // message template
   const [selectedLegislatorIds, setLegislatorIds] = useState([]); // list of selected legislator ID, with done legislators always in front.
   const [doneLegislatorMap, setLegislatorDone] = useState({}); // {[done legislator ID]: true, ...}
@@ -106,7 +109,7 @@ function App() {
         />
       );
 
-    case 'send': {
+    case 'send':
       return (
         <SendPage
           msg={msg}
@@ -118,7 +121,11 @@ function App() {
           onBack={handleBackToSettings}
         />
       );
+
+    case 'like': {
+      return <LikePage />;
     }
+
     default:
       throw new Error('Wrong page settings');
   }
