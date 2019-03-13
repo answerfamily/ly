@@ -50,7 +50,30 @@ function FacebookEmbedPlugin({
 
 export default React.memo(styled(FacebookEmbedPlugin)`
   margin: 16px 0;
+  min-width: 150px;
+  min-height: 150px;
   text-align: center; /* inner div will become inline-block by Facebook JS */
+
+  > div {
+    position: relative; /* for loading mask */
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.88);
+      pointer-events: none;
+      transition: opacity 0.8s;
+      z-index: 1;
+    }
+
+    &[fb-xfbml-state='rendered']::before {
+      opacity: 0;
+    }
+  }
 
   .fb-comment-embed {
     background: #fff;
