@@ -5,6 +5,17 @@ import FacebookEmbedPlugin from './FacebookEmbedPlugin';
 const TARGET_PER_SECTION = 5;
 const PLACEHOLDER_HEIGHT_PER_TARGET = 120;
 
+/**
+ * @param {string} id
+ * @param {string} type
+ * @return {function} callback
+ */
+function sendLikeShowEvent(id, type) {
+  return () => {
+    window.ga('send', 'event', 'like', 'show', `${type}/${id}`);
+  };
+}
+
 function LikeTargetSection({
   likeTargets = [],
   show = false,
@@ -33,7 +44,12 @@ function LikeTargetSection({
     >
       {show
         ? likeTargets.map(({ id, type }) => (
-            <FacebookEmbedPlugin key={`${type}_${id}`} id={id} type={type} />
+            <FacebookEmbedPlugin
+              key={`${type}_${id}`}
+              id={id}
+              type={type}
+              onParsed={sendLikeShowEvent(id, type)}
+            />
           ))
         : null}
     </section>
