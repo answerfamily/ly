@@ -20,7 +20,7 @@ function LikeTargetSection({
     },
     [onVisible]
   );
-  const disconnect = useIntersectionObserver(sectionRef.current, handleView);
+  const disconnect = useIntersectionObserver(sectionRef, handleView);
 
   return (
     <section

@@ -102,10 +102,7 @@ function SettingsPage({
     [msg, onMsgChange]
   );
 
-  useIntersectionObserver(
-    selectionSectionRef.current,
-    handleSelectionIntersect
-  );
+  useIntersectionObserver(selectionSectionRef, handleSelectionIntersect);
 
   return (
     <PageContainer>

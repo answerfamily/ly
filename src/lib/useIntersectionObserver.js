@@ -1,7 +1,7 @@
 import 'intersection-observer'; // polyfill
 import { useRef, useLayoutEffect } from 'react';
 
-function useIntersectionObserver(elem = null, onView = () => {}) {
+function useIntersectionObserver(elemRef, onView = () => {}) {
   const io = useRef(null);
   function disconnect() {
     if (io.current) {
@@ -9,15 +9,13 @@ function useIntersectionObserver(elem = null, onView = () => {}) {
     }
   }
   useLayoutEffect(() => {
-    if (io.current) {
-      io.current.disconnect();
-    }
-    if (elem) {
+    disconnect();
+    if (elemRef.current) {
       io.current = new IntersectionObserver(onView, {});
-      io.current.observe(elem);
+      io.current.observe(elemRef.current);
     }
     return disconnect;
-  }, [elem, onView]);
+  }, [elemRef, onView]);
 
   return disconnect;
 }
