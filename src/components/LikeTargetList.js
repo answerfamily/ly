@@ -58,7 +58,7 @@ function LikeTargetList({ likeTargets }) {
   }, []);
 
   const handleSectionVisible = useCallback(() => {
-    setShowIdx(idx => console.log('show idx increase!', idx) || idx + 1);
+    setShowIdx(idx => idx + 1);
   }, [setShowIdx]);
 
   return (
