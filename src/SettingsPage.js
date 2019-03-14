@@ -10,38 +10,13 @@ import useIntersectionObserver from './lib/useIntersectionObserver';
 import StartButton from './components/StartButton';
 import MessageTemplates from './components/MessageTemplates';
 import SendTypeSwitch from './components/SendTypeSwitch';
+import Jumbotron from './components/Jumbotron';
+import Emphasis from './components/Emphasis';
 
 const PageContainer = styled.div`
   padding: 40px;
   max-width: 720px;
   margin: 0 auto;
-`;
-
-const Jumbotron = styled.header`
-  text-align: center;
-  padding: 30px 0;
-
-  h1 {
-    font-size: 28px;
-    font-weight: normal;
-    letter-spacing: 0.125em;
-    margin: 24px 0 16px;
-    @media screen and (min-width: 425px) {
-      font-size: 40px;
-    }
-  }
-
-  h2 {
-    margin: 0;
-    font-size: 14px;
-    letter-spacing: 0.5em;
-    font-weight: 200;
-  }
-`;
-
-const Emphasis = styled.em`
-  color: #8f53ff;
-  font-style: normal;
 `;
 
 const Header = React.memo(() => (
