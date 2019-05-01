@@ -7,7 +7,7 @@ const fbPromise = (window.FB
     })
 ).then(() => {
   window.FB.init({
-    appId: process.env.REACT_APP_FB_ID,
+    // appId: process.env.REACT_APP_FB_ID,
     version: 'v3.2',
   });
 });
