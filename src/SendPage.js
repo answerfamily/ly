@@ -301,13 +301,9 @@ function SendPage({
                 </AutoSizer>
               </PluginWrapper>
               <Hint>
-                {feedonly ? (
-                  '＊ 委員粉專不開放私訊，請選一篇貼文回應'
-                ) : (
-                  <>
-                    ＊ 記得要按「發送」才會送出唷！<span>↑↑</span>
-                  </>
-                )}
+                {feedonly
+                  ? '＊ 委員粉專不開放私訊，請選一篇貼文回應'
+                  : '＊ 請選一篇貼文回應，或按「發送訊息」開啟 messenger'}
               </Hint>
             </>
           ) : (

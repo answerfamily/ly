@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 
 import waitForFB from 'lib/waitForFB';
 
-const DEFAULT_TABS = ['messages', 'timeline'];
+const DEFAULT_TABS = ['timeline', 'messages'];
 
 const Cover = styled.div`
   background: #ff9753;
@@ -60,10 +60,10 @@ function FacebookPagePlugin({
         className="fb-page"
         data-href={href}
         data-tabs={tabs.join(',')}
-        data-small-header="true"
+        data-small-header="false"
         data-adapt-container-width="false"
         data-show-facepile="false"
-        data-hide-cta="true"
+        data-hide-cta="false"
         data-width={width}
         data-height={height}
       />
