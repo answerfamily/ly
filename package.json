@@ -11,6 +11,7 @@
     "intersection-observer": "^0.5.1",
     "normalize.css": "^8.0.1",
     "react": "^16.8.2",
+    "react-app-polyfill": "^1.0.0",
     "react-dom": "^16.8.2",
     "react-scripts": "2.1.5",
     "react-virtualized-auto-sizer": "^1.0.2"
@@ -35,7 +36,7 @@
   "browserslist": [
     ">0.2%",
     "not dead",
-    "not ie <= 11",
+    "not ie <= 8",
     "not op_mini all"
   ],
   "devDependencies": {

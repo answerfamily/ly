@@ -1,3 +1,5 @@
+import 'react-app-polyfill/ie9';
+import 'react-app-polyfill/stable';
 import 'autotrack/lib/plugins/event-tracker';
 import 'autotrack/lib/plugins/outbound-link-tracker';
 
