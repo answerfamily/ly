@@ -8,10 +8,80 @@ import Divider from './components/Divider';
 
 import useIntersectionObserver from './lib/useIntersectionObserver';
 import StartButton from './components/StartButton';
+import { BorderedButton, Button } from './components/buttons';
 import MessageTemplates from './components/MessageTemplates';
 import SendTypeSwitch from './components/SendTypeSwitch';
 import Jumbotron from './components/Jumbotron';
 import Emphasis from './components/Emphasis';
+
+const Dialog = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  min-width: 80vw;
+  transform: translate(-50%, -50%);
+  padding: 40px;
+
+  color: #333;
+  background: #fff;
+  box-shadow: 0 0 100px 50px #000;
+
+  z-index: 10000;
+
+  footer {
+    margin-top: 2em;
+
+    > button:first-of-type {
+      margin-bottom: 12px;
+    }
+  }
+
+  @media screen and (min-width: 640px) {
+    footer {
+      display: flex;
+      > button:first-of-type {
+        margin: 0 12px 0 0;
+      }
+    }
+  }
+`;
+
+function RedirectDialog() {
+  const [isDismissed, setDismissed] = useState(false);
+
+  if (isDismissed) return null;
+
+  return (
+    <Dialog>
+      <h1>暫時搬家公告</h1>
+      <p>
+        目前「Facebook 私訊」功能
+        <a
+          href="https://developers.facebook.com/support/bugs/356561845208218/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          有一些問題
+        </a>
+        ，因此希望大家移駕到<a href="https://contact.hacktabl.org">暫時網站</a>
+        來陳情。
+      </p>
+      <footer>
+        {/* eslint-disable-next-line no-script-url, jsx-a11y/anchor-is-valid */}
+        <BorderedButton onClick={() => setDismissed(true)}>
+          繼續使用
+        </BorderedButton>
+        <Button
+          onClick={() => {
+            window.location.href = 'https://contact.hacktabl.org';
+          }}
+        >
+          換到新網站
+        </Button>
+      </footer>
+    </Dialog>
+  );
+}
 
 const PageContainer = styled.div`
   padding: 40px;
@@ -81,6 +151,7 @@ function SettingsPage({
 
   return (
     <PageContainer>
+      <RedirectDialog />
       <Header />
       <section>
         <p>
