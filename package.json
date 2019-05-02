@@ -22,7 +22,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d build --add",
     "lint": "eslint src",
     "data": "npm run data:legislator && npm run data:template && npm run data:tel",
     "data:legislator": "curl 'http://gsx2json.com/api?id=14aWeKOI6M44X0ApC2WF52OVRq13Ujr4MN9T1stPfFSc&sheet=1&columns=false' > ./src/data/legislators.json",
