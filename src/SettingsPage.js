@@ -109,8 +109,16 @@ function SettingsPage({
             margin: 0,
           }}
         >
-          <span style={{ fontSize: 12, opacity: 0.5 }}>
-            ＊ 加入你的經歷與觀察（例：有同事是同志）會更有說服力唷！
+          <span style={{ fontSize: 12, opacity: 0.88 }}>
+            ＊ 不知如何下筆？參考
+            <a
+              href={process.env.REACT_APP_REFERENCE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              這些範例
+            </a>
+            ，加入你的個人背景與觀察（如：有同事是同志），會更有說服力唷！
           </span>
           <button
             style={{ flexShrink: 0, marginLeft: '8px' }}
