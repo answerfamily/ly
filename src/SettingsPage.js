@@ -63,7 +63,8 @@ function RedirectDialog() {
         >
           有一些問題
         </a>
-        ，因此希望大家移駕到<a href="https://contact.hacktabl.org">暫時網站</a>
+        ，因此希望大家移駕到
+        <a href="https://contact.hacktabl.org/index.html">暫時網站</a>
         來陳情。
       </p>
       <footer>
@@ -73,7 +74,7 @@ function RedirectDialog() {
         </BorderedButton>
         <Button
           onClick={() => {
-            window.location.href = 'https://contact.hacktabl.org';
+            window.location.href = 'https://contact.hacktabl.org/index.html';
           }}
         >
           換到新網站
