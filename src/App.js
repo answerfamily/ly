@@ -13,9 +13,9 @@ const POSITION_ORDER = {
 
 const DEFAULT_SEND_TYPE = 'fb';
 const DEFAULT_FB_MESSAGE =
-  '我是ＸＸ區的選民，請委員支持用合憲的法律，讓同志可以結婚。';
+  '請委員一定要支持行政院版748施行法，要婚姻不要結合！';
 const DEFAULT_TEL_MESSAGE =
-  '您好，我是我是ＸＸ區的選民，我想要陳情。\n\n我希望委員支持用合憲的法律，讓同志可以結婚。';
+  '您好，我想要陳情。\n\n我希望委員支持行政院版748施行法，讓同志可以結婚、不要結合。';
 
 const DEFAULT_PAGE = window.location.hash === '#/like' ? 'like' : 'settings';
 
