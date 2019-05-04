@@ -42,7 +42,7 @@ const Section = styled.section`
 /**
  * Section of all legislators and controls
  *
- * @param {Object[]} props.legislator
+ * @param {Object[]} props.legislators
  * @param {String[]} props.selectedLegislatorIds
  * @param {Object} props.doneLegislatorMap - id to true map
  * @param {function} props.onSelectionChange
@@ -89,6 +89,72 @@ function LegislatorSections({
         />
       ))}
     </Container>
+  );
+}
+
+/**
+ * Logic of selecting legislators with a specific spreadsheet column being true
+ *
+ * @param {string} targetKey - the column name to look up
+ * @param {object[]} legislators
+ * @param {object} selectedIdMap
+ * @param {function} onChange - callback to call when checkbox is checked
+ * @returns {object} checkboxProps - When checked, all legislators with the column being true will be selected/deselected
+ */
+function useColumnTrueCheckbox(
+  targetKey,
+  legislators,
+  selectedIdMap,
+  onChange
+) {
+  const targetedSelectedCount = useMemo(
+    () =>
+      legislators.filter(
+        legislator => legislator[targetKey] && selectedIdMap[legislator.id]
+      ).length,
+    [legislators, selectedIdMap]
+  );
+  const targetedSelectedTotal = useMemo(
+    () => legislators.filter(legislator => legislator[targetKey]).length,
+    [legislators]
+  );
+
+  const handleTargetedToggle = useCallback(
+    e => {
+      if (targetedSelectedCount === 0) {
+        // select all in platform
+        onChange(
+          legislators
+            .filter(
+              legislator =>
+                legislator[targetKey] || selectedIdMap[legislator.id]
+            )
+            .map(({ id }) => id)
+        );
+      } else {
+        // deselect all
+        onChange(
+          legislators
+            .filter(
+              legislator =>
+                !legislator[targetKey] && selectedIdMap[legislator.id]
+            )
+            .map(({ id }) => id)
+        );
+      }
+    },
+    [legislators, onChange, selectedIdMap]
+  );
+
+  return useMemo(
+    () => ({
+      onChange: handleTargetedToggle,
+      checked: targetedSelectedCount === targetedSelectedTotal,
+      isIndeterminate:
+        0 < targetedSelectedCount &&
+        targetedSelectedCount < targetedSelectedTotal,
+    }),
+    [targetedSelectedCount, targetedSelectedTotal, handleTargetedToggle]
   );
 }
 
@@ -157,44 +223,23 @@ function PositionSelector({ legislators, selectedIdMap, onChange = () => {} }) {
     }
   }, [selectedCount, legislators]);
 
-  const targetedSelectedCount = useMemo(
-    () =>
-      legislators.filter(
-        ({ id, signedmutualliving }) => signedmutualliving && selectedIdMap[id]
-      ).length,
-    [legislators, selectedIdMap]
+  const mutualLivingCheckboxProps = useColumnTrueCheckbox(
+    'signedmutualliving',
+    legislators,
+    selectedIdMap,
+    onChange
   );
-  const targetedSelectedTotal = useMemo(
-    () =>
-      legislators.filter(({ signedmutualliving }) => signedmutualliving).length,
-    [legislators]
+  const act760CheckboxProps = useColumnTrueCheckbox(
+    'signed760',
+    legislators,
+    selectedIdMap,
+    onChange
   );
-
-  const handleTargetedToggle = useCallback(
-    e => {
-      if (targetedSelectedCount === 0) {
-        // select all in platform
-        onChange(
-          legislators
-            .filter(
-              ({ signedmutualliving, id }) =>
-                signedmutualliving || selectedIdMap[id]
-            )
-            .map(({ id }) => id)
-        );
-      } else {
-        // deselect all
-        onChange(
-          legislators
-            .filter(
-              ({ signedmutualliving, id }) =>
-                !signedmutualliving && selectedIdMap[id]
-            )
-            .map(({ id }) => id)
-        );
-      }
-    },
-    [legislators, onChange, selectedIdMap]
+  const civilCheckboxProps = useColumnTrueCheckbox(
+    'signed10',
+    legislators,
+    selectedIdMap,
+    onChange
   );
 
   return (
@@ -229,14 +274,7 @@ function PositionSelector({ legislators, selectedIdMap, onChange = () => {} }) {
       ))}
       <li>
         <label style={{ fontWeight: 'bold', color: '#FF5368' }}>
-          <Checkbox
-            onChange={handleTargetedToggle}
-            checked={targetedSelectedCount === targetedSelectedTotal}
-            isIndeterminate={
-              0 < targetedSelectedCount &&
-              targetedSelectedCount < targetedSelectedTotal
-            }
-          />
+          <Checkbox {...mutualLivingCheckboxProps} />
           連署
         </label>
         <a
@@ -244,7 +282,33 @@ function PositionSelector({ legislators, selectedIdMap, onChange = () => {} }) {
           target="_blank"
           rel="noopener noreferrer"
         >
-          反同專法
+          12 案施行法(賴士葆)
+        </a>
+      </li>
+      <li>
+        <label style={{ fontWeight: 'bold', color: '#FF5368' }}>
+          <Checkbox {...act760CheckboxProps} />
+          連署
+        </label>
+        <a
+          href="https://www.storm.mg/article/1242192"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          748+12 施行法(林岱樺)
+        </a>
+      </li>
+      <li>
+        <label style={{ fontWeight: 'bold', color: '#FF5368' }}>
+          <Checkbox {...civilCheckboxProps} />
+          連署
+        </label>
+        <a
+          href="https://www.upmedia.mg/news_info.php?SerialNo=61646"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          民法婚姻一男一女(黃昭順)
         </a>
       </li>
     </PositionCheckboxList>
