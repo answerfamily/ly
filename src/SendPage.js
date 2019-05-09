@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useState } from 'react';
+import React, { useRef, useCallback, useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import AutoSizer from 'react-virtualized-auto-sizer';
 
@@ -24,6 +24,8 @@ const Header = styled.header`
   height: 40px;
   display: flex;
   align-items: center;
+
+  z-index: 1; /* higher than other positioned contents */
 
   span {
     margin: 0 auto;
@@ -195,6 +197,11 @@ function SendPage({
       block: 'start',
     });
   }, [submitStepRef]);
+
+  useEffect(() => {
+    // Scroll to top when changing to send page
+    window.scrollTo(0, 0);
+  }, []);
 
   if (currentIdx === -1) {
     // Show finish screen
