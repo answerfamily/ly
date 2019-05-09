@@ -11,6 +11,7 @@ import ContactDisplay from 'components/ContactDisplay';
 import FinishDisplay from 'components/FinishDisplay';
 import { Button } from 'components/buttons';
 import CopyButton from './components/CopyButton';
+import SendPageTutorial from './components/SendPageTutorial';
 
 const Header = styled.header`
   position: fixed;
@@ -215,6 +216,7 @@ function SendPage({
 
   return (
     <>
+      <SendPageTutorial />
       <Header>
         <Back onClick={onBack}>設定立委</Back>
         <span>
