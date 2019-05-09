@@ -216,7 +216,7 @@ function SendPage({
 
   return (
     <>
-      <SendPageTutorial />
+      {sendType === 'fb' && <SendPageTutorial />}
       <Header>
         <Back onClick={onBack}>設定立委</Back>
         <span>
