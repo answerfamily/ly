@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 
 import waitForFB from 'lib/waitForFB';
 
-const DEFAULT_TABS = ['messages', 'timeline'];
+const DEFAULT_TABS = ['timeline', 'messages'];
 
 const Cover = styled.div`
   background: #ff9753;

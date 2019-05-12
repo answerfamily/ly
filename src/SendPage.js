@@ -147,17 +147,13 @@ const PluginWrapper = styled.div`
 `;
 
 const Hint = styled.div`
-  display: flex;
   background: #ff9753;
   padding: 4px;
   border-top: 0;
   border-bottom-right-radius: 8px;
   border-bottom-left-radius: 8px;
   font-size: 14px;
-
-  span {
-    margin: 0 1em 0 auto;
-  }
+}
 `;
 
 function SendPage({
@@ -301,13 +297,9 @@ function SendPage({
                 </AutoSizer>
               </PluginWrapper>
               <Hint>
-                {feedonly ? (
-                  '＊ 委員粉專不開放私訊，請選一篇貼文回應'
-                ) : (
-                  <>
-                    ＊ 記得要按「發送」才會送出唷！<span>↑↑</span>
-                  </>
-                )}
+                {feedonly
+                  ? '＊ 請挑選一篇貼文回應'
+                  : '＊ 請挑選一篇貼文回應，或點「訊息」私訊'}
               </Hint>
             </>
           ) : (
