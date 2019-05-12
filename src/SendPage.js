@@ -213,7 +213,6 @@ function SendPage({
     name,
     facebookpage,
     facebookprofile,
-    feedonly,
     cannotload,
   } = selectedLegislators[currentIdx];
 
@@ -269,8 +268,9 @@ function SendPage({
                   {({ width, height }) => [
                     <FacebookPagePlugin
                       key={currentIdx}
-                      href={cannotload ? null : facebookpage}
+                      href={facebookpage}
                       profile={facebookprofile}
+                      canLoad={!cannotload}
                       width={width - 4 /* left/right border width */}
                       height={height - 2 /* top border width */}
                       onParsed={({ height }) =>
@@ -281,13 +281,12 @@ function SendPage({
                       <FacebookPagePlugin
                         className="preload-iframe"
                         key={currentIdx + 1}
-                        href={
-                          selectedLegislators[currentIdx + 1].cannotload
-                            ? null
-                            : selectedLegislators[currentIdx + 1].facebookpage
-                        }
+                        href={selectedLegislators[currentIdx + 1].facebookpage}
                         profile={
                           selectedLegislators[currentIdx + 1].facebookprofile
+                        }
+                        canLoad={
+                          !selectedLegislators[currentIdx + 1].cannotload
                         }
                         width={width - 4 /* left/right border width */}
                         height={height - 2 /* top border width */}
@@ -297,9 +296,20 @@ function SendPage({
                 </AutoSizer>
               </PluginWrapper>
               <Hint>
-                {feedonly
-                  ? '＊ 請挑選一篇貼文回應'
-                  : '＊ 請挑選一篇貼文回應，或點「訊息」私訊'}
+                ＊ 請挑選一篇貼文回應。
+                {facebookprofile ? (
+                  <>
+                    委員另有
+                    <a
+                      href={facebookprofile}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      個人頁面
+                    </a>
+                    可供留言。
+                  </>
+                ) : null}
               </Hint>
             </>
           ) : (

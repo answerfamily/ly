@@ -21,6 +21,7 @@ function FacebookPagePlugin({
   height = 500,
   onParsed = null, // callback on layout being parsed
   profile = '',
+  canLoad = true,
 }) {
   const fbRoot = useRef(null);
 
@@ -34,18 +35,28 @@ function FacebookPagePlugin({
     });
   }, [tabs, href, width, height]);
 
-  if (!href) {
+  if (!canLoad || !href) {
     return (
       <Cover className={className} style={{ width, height }}>
-        <p>無法顯示這位委員的粉絲專頁。</p>
+        <p>無法在這裏顯示這位委員的粉絲專頁。</p>
 
-        {profile ? (
+        {profile || href ? (
           <p>
-            請至
-            <a href={profile} target="_blank" rel="noopener noreferrer">
-              委員的個人檔案
-            </a>
-            頁面留言。
+            請手動點擊下面網址來陳情：
+            <br />
+            {href ? (
+              <>
+                <a href={href} target="_blank" rel="noopener noreferrer">
+                  委員的粉絲專頁
+                </a>
+                <br />
+              </>
+            ) : null}
+            {profile ? (
+              <a href={profile} target="_blank" rel="noopener noreferrer">
+                委員的個人檔案
+              </a>
+            ) : null}
           </p>
         ) : (
           <p>請直接下一位。</p>
