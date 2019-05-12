@@ -16,7 +16,7 @@ const Backdrop = styled.div`
 `;
 
 const Outside = styled.div`
-  position: absolute;
+  position: fixed;
   z-index: -1;
   left: 0;
   top: 0;
@@ -26,6 +26,8 @@ const Outside = styled.div`
 
 const Dialog = styled.div`
   margin: 0 auto;
+  display: flex; /* avoid collapsing margin with children */
+  flex-flow: column;
   width: 80vw;
   max-width: 320px;
   border-radius: 5px;
@@ -92,7 +94,29 @@ function SendPageTutorial() {
   return (
     <Backdrop>
       <Dialog>
-        <img src={require('../images/p1.png')} alt="FB 陳情教學 1" />
+        <img
+          alt="FB 陳情教學 1"
+          src={require('../images/p1.png')}
+          srcset={`
+            ${require('../images/p1.png')},
+            ${require('../images/p1@2x.png')} 2x`}
+        />
+        <Notice>
+          小撇步：
+          <ul>
+            <li>
+              公開回應會被大眾看見，可以檢視一下自己的訊息，避免給大眾帶來負面印象。
+            </li>
+            <li>留言後，可以順便對他人挺同的回應按讚，增加聲量。</li>
+          </ul>
+        </Notice>
+        <img
+          alt="FB 陳情教學 2"
+          src={require('../images/p2.png')}
+          srcset={`
+          ${require('../images/p2.png')},
+          ${require('../images/p2@2x.png')} 2x`}
+        />
         <Notice>
           如果按下「送出」後出現{' '}
           <img height="20" src={require('../images/confirm.png')} alt="確認" />
@@ -109,16 +133,10 @@ function SendPageTutorial() {
               </a>
               私訊，或者
             </li>
-            <li>
-              改在粉專公開留言（下面有教學
-              <span role="img" aria-label="">
-                👇
-              </span>
-              ）
-            </li>
+            <li>改在粉專公開留言（最上面有教學）</li>
           </ul>
+          另外，有友善的立委建議私訊量可以少一點，請多多在粉專公開留言唷！
         </Notice>
-        <img src={require('../images/p2.png')} alt="FB 陳情教學 2" />
       </Dialog>
       <StartButton onClick={handleToggle}>知道了，開始吧！</StartButton>
       <Outside onClick={handleToggle} />
