@@ -5,10 +5,10 @@ import LikePage from './LikePage';
 import useLegislatorData from 'lib/useLegislatorData';
 
 const POSITION_ORDER = {
-  支持同婚: 1,
-  支持專法: 2,
-  反對同婚: 3,
-  未表態: 4,
+  未表態: 1,
+  反對同婚: 2,
+  支持專法: 3,
+  支持同婚: 4,
 };
 
 const DEFAULT_SEND_TYPE = 'fb';
