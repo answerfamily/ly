@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
-import { Button } from './buttons';
 import styled from '@emotion/styled';
+import { Button } from './buttons';
+import Notice from './Notice';
 
 const Backdrop = styled.div`
   position: fixed;
@@ -49,14 +50,6 @@ const StartButton = styled(Button)`
   right: 0;
   border-radius: 0;
   padding: 20px 0;
-`;
-
-const Notice = styled.div`
-  color: #8f53ff;
-  margin: 16px;
-  padding: 16px;
-  border: 2px solid currentColor;
-  border-radius: 3px;
 `;
 
 const TeacherIcon = styled.div`

@@ -5,6 +5,7 @@ import MessageInput from './components/MessageInput';
 import LegislatorSections from './components/LegislatorSections';
 import SpinningIcon from './components/SpinningIcon';
 import Divider from './components/Divider';
+import Notice from './components/Notice';
 
 import useIntersectionObserver from './lib/useIntersectionObserver';
 import StartButton from './components/StartButton';
@@ -91,6 +92,11 @@ function SettingsPage({
         <Divider />
         <h3>你想要怎麼陳情？</h3>
         <SendTypeSwitch value={sendType} onChange={onSendTypeChange} />
+        {sendType === 'tel' && (
+          <Notice style={{ marginLeft: 0, marginRight: 0 }}>
+            請在公務人員的上班時間撥打。若為午休時間（12:00~13:30），可以加句「不好意思打擾您午休」。
+          </Notice>
+        )}
 
         <label>
           <h3>你想要跟委員們說什麼呢？</h3>
