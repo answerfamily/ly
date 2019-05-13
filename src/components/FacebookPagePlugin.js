@@ -33,7 +33,7 @@ function FacebookPagePlugin({
         }
       });
     });
-  }, [tabs, href, width, height]);
+  }, [tabs, href, width, height, onParsed]);
 
   if (!canLoad || !href) {
     return (

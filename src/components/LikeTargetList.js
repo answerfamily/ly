@@ -50,6 +50,7 @@ function LikeTargetSection({
   onVisible = () => {},
 }) {
   const sectionRef = useRef(null);
+  let disconnect;
   const handleView = useCallback(
     entries => {
       if (entries[0].isIntersecting) {
@@ -57,9 +58,9 @@ function LikeTargetSection({
         onVisible();
       }
     },
-    [onVisible]
+    [disconnect, onVisible]
   );
-  const disconnect = useIntersectionObserver(sectionRef, handleView);
+  disconnect = useIntersectionObserver(sectionRef, handleView);
 
   return (
     <section

@@ -112,11 +112,11 @@ function useColumnTrueCheckbox(
       legislators.filter(
         legislator => legislator[targetKey] && selectedIdMap[legislator.id]
       ).length,
-    [legislators, selectedIdMap]
+    [legislators, selectedIdMap, targetKey]
   );
   const targetedSelectedTotal = useMemo(
     () => legislators.filter(legislator => legislator[targetKey]).length,
-    [legislators]
+    [legislators, targetKey]
   );
 
   const handleTargetedToggle = useCallback(
@@ -143,7 +143,7 @@ function useColumnTrueCheckbox(
         );
       }
     },
-    [legislators, onChange, selectedIdMap]
+    [legislators, onChange, selectedIdMap, targetKey, targetedSelectedCount]
   );
 
   return useMemo(
@@ -221,7 +221,7 @@ function PositionSelector({ legislators, selectedIdMap, onChange = () => {} }) {
     } else {
       onChange([]);
     }
-  }, [selectedCount, legislators]);
+  }, [selectedCount, onChange, legislators]);
 
   const mutualLivingCheckboxProps = useColumnTrueCheckbox(
     'signedmutualliving',
@@ -366,7 +366,7 @@ function LegislatorSection({
         onChange(Object.keys(selectedIdMap).concat(selectedId));
       }
     },
-    [legislators, selectedIdMap, onChange]
+    [selectedIdMap, onChange]
   );
 
   return (
