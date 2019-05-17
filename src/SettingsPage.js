@@ -85,9 +85,9 @@ function SettingsPage({
       <Header />
       <section>
         <p>
-          讓同志能以<Emphasis>婚姻</Emphasis>成家，就是「愛家」的表現。
-          在平權法案通過之前，讓我們動動手指頭，不分異同地向立法委員們表達我們
-          <Emphasis>希望讓同志可以結婚</Emphasis>的心聲吧！
+          讓同志能夠<Emphasis>結婚</Emphasis>成家，就是「愛家」的表現。
+          在行政院專法通過之後，讓我們動動手指頭，不分異同地向立法委員們分享我們
+          <Emphasis>同志可以結婚</Emphasis>的喜悅！
         </p>
         <Divider />
         <h3>你想要怎麼陳情？</h3>
