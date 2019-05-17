@@ -241,6 +241,12 @@ function PositionSelector({ legislators, selectedIdMap, onChange = () => {} }) {
     selectedIdMap,
     onChange
   );
+  const vote4CheckboxProps = useColumnTrueCheckbox(
+    'vote4',
+    legislators,
+    selectedIdMap,
+    onChange
+  );
 
   return (
     <PositionCheckboxList>
@@ -309,6 +315,19 @@ function PositionSelector({ legislators, selectedIdMap, onChange = () => {} }) {
           rel="noopener noreferrer"
         >
           民法婚姻一男一女(黃昭順)
+        </a>
+      </li>
+      <li>
+        <label style={{ fontWeight: 'bold', color: '#FF5368' }}>
+          <Checkbox {...vote4CheckboxProps} />
+          表決贊成
+        </label>
+        <a
+          href="https://www.setn.com/News.aspx?NewsID=542496"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          748施行法
         </a>
       </li>
     </PositionCheckboxList>
